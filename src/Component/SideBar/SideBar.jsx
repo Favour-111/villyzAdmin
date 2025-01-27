@@ -7,6 +7,7 @@ import { LiaOpencart } from "react-icons/lia";
 import { FaBlogger, FaUser } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 import { CiLogout } from "react-icons/ci";
+import { MdOutlineDeliveryDining } from "react-icons/md";
 import {
   RiArrowDropDownLine,
   RiMenuFold2Line,
@@ -229,6 +230,24 @@ const SideBar = () => {
                   <div className="d-flex align-items-center gap-2 actionIcons">
                     <LiaOpencart size={15} />
                     <div>Orders</div>
+                  </div>
+                </Link>
+              </li>
+              {/* Delivery */}
+              <li
+                className={
+                  activeLink === "delivery" ? "Link-active" : "link-inactive"
+                }
+                onClick={() => {
+                  handleLinkClick("delivery");
+                  navigate("/delivery");
+                  window.scrollTo(0, 0);
+                }}
+              >
+                <Link className="LinkInActive">
+                  <div className="d-flex align-items-center gap-2 actionIcons">
+                    <MdOutlineDeliveryDining size={15} />
+                    <div>delivery</div>
                   </div>
                 </Link>
               </li>
