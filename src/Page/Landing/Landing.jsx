@@ -376,7 +376,7 @@ const Landing = () => {
           </div>
         </div>
         <div className="p-4">
-          <div className="recent-order-graph shadow-sm p-5">
+          <div className="recent-order-graph shadow-sm">
             <div className="recent-header">Recent Order</div>
             <Graph />
           </div>
@@ -428,7 +428,7 @@ const Landing = () => {
             <div className="col-md-7 col-sm-12 mt-3">
               <div className="recent-Users shadow-sm">
                 <div className="recent-order-head">Recent Product</div>
-                <table>
+                <table className="table2">
                   <thead>
                     <tr className="tableHead">
                       <th>Product</th>

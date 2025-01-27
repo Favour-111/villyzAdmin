@@ -27,6 +27,7 @@ const Login = () => {
       });
       setTimeout(() => {
         Navigate("/page");
+        window.scrollTo(0, 0);
       }, 2000);
     } else {
       Swal.fire({

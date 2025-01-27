@@ -101,6 +101,7 @@ select {
   display: flex;
   align-items: center;
   gap: 10px;
+  justify-content: center;
   padding: 10px 20px;
   border-radius: 10px;
   background-color: transparent;
@@ -186,4 +187,9 @@ table tbody tr {
   border-radius: 5px;
   text-transform: capitalize;
   background-color: rgba(0, 255, 0, 0.167);
+}
+@media screen and (max-width: 468px) {
+  .product-search {
+    width: 300px;
+  }
 }

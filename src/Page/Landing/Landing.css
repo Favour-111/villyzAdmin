@@ -80,6 +80,7 @@
 .recent-order-graph {
   background-color: white;
   border-radius: 20px;
+  padding: 40px;
 }
 .recent-header {
   font-family: poppinsSemiBold;
@@ -101,5 +102,22 @@
   font-family: poppinsSemiBold;
   font-size: 20px;
 }
-table {
+.table2 {
+  width: 500px;
+}
+@media screen and (max-width: 768px) {
+  .recent-order-graph {
+    padding: 10px;
+  }
+}
+@media screen and (max-width: 468px) {
+  table tr th {
+    font-size: 12px;
+  }
+  table tr td {
+    font-size: 12px;
+  }
+  table tr td img {
+    width: 30px;
+  }
 }

@@ -120,6 +120,7 @@ const SideBar = () => {
                 onClick={() => {
                   handleLinkClick("dashboard");
                   navigate("/page");
+                  window.scrollTo(0, 0);
                 }}
               >
                 <Link className="Link" to="/page">
@@ -220,7 +221,8 @@ const SideBar = () => {
                 }
                 onClick={() => {
                   handleLinkClick("orders");
-                  navigate("orders");
+                  navigate("/orders");
+                  window.scrollTo(0, 0);
                 }}
               >
                 <Link className="LinkInActive">
@@ -239,6 +241,7 @@ const SideBar = () => {
                 onClick={() => {
                   handleLinkClick("users");
                   navigate("/user");
+                  window.scrollTo(0, 0);
                 }}
               >
                 <Link className="LinkInActive">

@@ -1,0 +1,20 @@
+.search-order {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+.showing {
+  display: flex;
+  align-self: center;
+  justify-content: space-between;
+}
+@media screen and (max-width: 768px) {
+  .search-order {
+    margin-left: 0;
+  }
+  .showing {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 30px;
+  }
+}

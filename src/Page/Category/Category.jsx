@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
 import { CiEdit, CiSearch } from "react-icons/ci";
+import "./Category.css";
 import { IoMdAdd } from "react-icons/io";
 import { IoEyeOutline } from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -159,7 +160,7 @@ const Category = () => {
                 <MdOutlineTipsAndUpdates />
               </div>
             </div>
-            <div className="d-flex align-items-center mt-4">
+            <div className="showing mt-4">
               <div className=" d-flex align-items-center gap-1">
                 <div className="table-desc">Showing</div>
                 <div>
@@ -175,7 +176,7 @@ const Category = () => {
                   </select>
                 </div>
               </div>
-              <div className="ms-4 d-flex align-items-center gap-1">
+              <div className="search-order ">
                 <div className="table-desc">Search</div>
                 <div className="product-search ms-1">
                   <input
