@@ -8,6 +8,7 @@
   align-self: center;
   justify-content: space-between;
 }
+
 @media screen and (max-width: 768px) {
   .search-order {
     margin-left: 0;
@@ -16,5 +17,8 @@
     flex-direction: column;
     gap: 10px;
     margin-top: 30px;
+  }
+  .table3 {
+    width: 700px;
   }
 }

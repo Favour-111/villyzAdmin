@@ -165,11 +165,12 @@ const Orders = () => {
                 ID, which you can rely on to find the exact product you need.
               </div>
             </div>
-            <div className="d-flex align-items-center mt-4">
+            <div className="showing">
               <div className=" d-flex align-items-center gap-1">
                 <div className="table-desc">Showing</div>
                 <div>
                   <select
+                    className="select"
                     name=""
                     id=""
                     value={selectedOption}
@@ -181,7 +182,7 @@ const Orders = () => {
                   </select>
                 </div>
               </div>
-              <div className="ms-4 d-flex align-items-center gap-1">
+              <div className="search-order">
                 <div className="table-desc">Search</div>
                 <div className="product-search ms-1">
                   <input
@@ -207,7 +208,7 @@ const Orders = () => {
               {/* Search Bar */}
 
               {/* Product Table */}
-              <table>
+              <table className="table2">
                 <thead>
                   <tr className="tableHead">
                     <th>order ID</th>

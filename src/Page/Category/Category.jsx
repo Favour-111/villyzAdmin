@@ -165,6 +165,7 @@ const Category = () => {
                 <div className="table-desc">Showing</div>
                 <div>
                   <select
+                    className="select"
                     name=""
                     id=""
                     value={selectedOption}
@@ -213,7 +214,7 @@ const Category = () => {
               {/* Search Bar */}
 
               {/* Product Table */}
-              <table>
+              <table className="table3">
                 <thead>
                   <tr className="tableHead">
                     <th>category</th>

@@ -72,7 +72,7 @@ body {
   font-size: 10px;
   font-family: poppinsMedium;
 }
-select {
+.select {
   outline: none;
   border: 1px solid #e3e3e3;
   padding: 3px 10px;
@@ -190,6 +190,9 @@ table tbody tr {
 }
 @media screen and (max-width: 468px) {
   .product-search {
-    width: 300px;
+    width: 250px;
+  }
+  .select {
+    width: 250px !important;
   }
 }

@@ -386,7 +386,7 @@ const Landing = () => {
             <div className="col-md-5 col-sm-12 mt-3">
               <div className="recent-Users shadow-sm">
                 <div className="recent-order-head">Recent Users</div>{" "}
-                <table>
+                <table className="table2">
                   <thead>
                     <tr className="tableHead">
                       <th>user</th>

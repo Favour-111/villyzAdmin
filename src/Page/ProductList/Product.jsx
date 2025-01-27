@@ -170,6 +170,7 @@ const ProductList = ({ name }) => {
                 <div className="table-desc">Showing</div>
                 <div>
                   <select
+                    className="select"
                     name=""
                     id=""
                     value={selectedOption}
@@ -218,7 +219,7 @@ const ProductList = ({ name }) => {
               {/* Search Bar */}
 
               {/* Product Table */}
-              <table>
+              <table className="table3">
                 <thead>
                   <tr className="tableHead">
                     <th>Product</th>
