@@ -125,7 +125,7 @@ li {
 .dropdown {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
   justify-content: center;
   transition: 350ms;
   li {

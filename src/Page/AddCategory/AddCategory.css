@@ -107,13 +107,14 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-  }
-  input,
-  select {
-    width: 300px !important;
-  }
-  .upload-img {
-    width: 100%;
+
+    input,
+    select {
+      width: 300px !important;
+    }
+    .upload-img {
+      width: 100%;
+    }
   }
 }
 @media screen and (max-width: 460px) {

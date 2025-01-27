@@ -102,12 +102,13 @@
   font-family: poppinsSemiBold;
   font-size: 20px;
 }
-.table2 {
-  width: 500px;
-}
+
 @media screen and (max-width: 768px) {
   .recent-order-graph {
     padding: 10px;
+  }
+  .table2 {
+    width: 500px;
   }
 }
 @media screen and (max-width: 468px) {
