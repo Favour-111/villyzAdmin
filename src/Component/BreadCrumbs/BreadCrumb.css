@@ -1,0 +1,30 @@
+.breadCrumbs {
+  font-family: poppinsSemiBold;
+  font-size: 20px;
+  text-transform: capitalize;
+}
+.bread-crumb-content {
+  font-family: poppinsRegular;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px;
+  font-size: 12px;
+}
+.content-crumb {
+  color: #787878;
+}
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+@media screen and (max-width: 768px) {
+  .breadcrumb {
+    flex-direction: column;
+  }
+  .bread-crumb-content {
+    padding: 0;
+  }
+}

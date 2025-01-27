@@ -1,0 +1,189 @@
+:root {
+  --primary-color: rgb(83, 109, 254);
+  --primary-color-light: #f3f8fb;
+  --primary-color-lighter: #e1eff85b;
+  --text: #4b5966;
+}
+
+@font-face {
+  font-family: poppinsBold;
+  src: url(../../assets/font/IBMPlexSans-Bold.ttf);
+}
+
+@font-face {
+  font-family: poppinsLight;
+  src: url(../../assets/font/IBMPlexSans-Light.ttf);
+}
+
+@font-face {
+  font-family: poppinsSemiBold;
+  src: url(../../assets/font/Poppins-SemiBold.ttf);
+}
+
+@font-face {
+  font-family: poppinsRegular;
+  src: url(../../assets/font/Poppins-Medium.ttf);
+}
+
+@font-face {
+  font-family: poppinsMedium;
+  src: url(../../assets/font/Poppins-Medium.ttf);
+}
+
+/* Ensure the html and body are filling the viewport */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.product {
+  background-color: var(--primary-color-lighter);
+  min-height: 100vh; /* Ensure it covers the full height of the viewport */
+  width: 100%; /* Ensure it spans the full width */
+  display: flex; /* Allows proper alignment if needed */
+  flex-direction: column;
+  overflow: hidden; /* Prevent unwanted scrollbars */
+}
+
+/* Ensure consistent scrolling */
+.product-body {
+  height: calc(100vh - 100px); /* Adjust for the TopBar or other elements */
+  overflow-y: auto; /* Enable scrolling for overflow */
+  padding: 1rem;
+  background-color: white;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.product-body::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar for modern browsers */
+}
+
+.tips {
+  color: #4b5966;
+  font-family: poppinsMedium;
+  font-size: 12px;
+}
+.table-desc {
+  color: #4b5966;
+  font-size: 10px;
+  font-family: poppinsMedium;
+}
+select {
+  outline: none;
+  border: 1px solid #e3e3e3;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-family: poppinsMedium;
+  font-size: 14px;
+}
+.product-search {
+  display: flex;
+  align-items: center;
+  border: 1px solid #f3f3f3;
+  width: 500px;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-radius: 10px;
+  input {
+    outline: none;
+    border: none;
+  }
+  ::placeholder {
+    font-family: poppinsMedium;
+    font-size: 13px;
+  }
+}
+.add-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: transparent;
+  margin-left: 10px;
+  color: #4b5966;
+  text-transform: capitalize;
+  font-family: poppinsMedium;
+  font-size: 14px;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  transition: 350ms;
+}
+.add-btn:hover {
+  background-color: var(--primary-color);
+  color: white !important;
+}
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px; /* Adds space between rows */
+}
+
+table th,
+table td {
+  padding: 15px;
+  text-align: left;
+}
+table th {
+  font-family: poppinsRegular;
+  font-size: 15px;
+}
+table td {
+  font-family: poppinsMedium;
+  font-size: 14px;
+}
+table tbody tr:nth-child(odd) {
+  background-color: #f3f3f3;
+  border-radius: 10px !important;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+table tbody tr {
+  overflow: hidden; /* Ensures the border-radius applies */
+}
+.padination-active {
+  background-color: var(--primary-color);
+  color: white;
+  font-family: poppinsRegular;
+  border-radius: 50px;
+  height: 35px;
+  width: 35px;
+  font-size: 14px;
+  outline: none;
+}
+.padination-inactive {
+  background-color: #f3f3f3;
+
+  color: #4b5966;
+  font-family: poppinsRegular;
+  border-radius: 50px;
+  height: 40px;
+  font-size: 14px;
+  width: 40px;
+}
+.out {
+  color: red;
+  width: 70px;
+  font-size: 10px;
+  text-align: center;
+  border-radius: 5px;
+  text-transform: capitalize;
+  background-color: rgba(255, 0, 0, 0.158);
+}
+.in {
+  color: rgb(10, 174, 10);
+  width: 70px;
+  font-size: 10px;
+  text-align: center;
+  border-radius: 5px;
+  text-transform: capitalize;
+  background-color: rgba(0, 255, 0, 0.167);
+}

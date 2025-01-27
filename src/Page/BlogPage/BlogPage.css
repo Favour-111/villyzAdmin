@@ -1,0 +1,126 @@
+:root {
+  --primary-color: rgb(83, 109, 254);
+  --primary-color-light: #f3f8fb;
+  --primary-color-lighter: #e1eff85b;
+  --text: #4b5966;
+}
+
+@font-face {
+  font-family: poppinsBold;
+  src: url(../../assets/font/IBMPlexSans-Bold.ttf);
+}
+
+@font-face {
+  font-family: poppinsLight;
+  src: url(../../assets/font/IBMPlexSans-Light.ttf);
+}
+
+@font-face {
+  font-family: poppinsSemiBold;
+  src: url(../../assets/font/Poppins-SemiBold.ttf);
+}
+
+@font-face {
+  font-family: poppinsRegular;
+  src: url(../../assets/font/Poppins-Medium.ttf);
+}
+
+@font-face {
+  font-family: poppinsMedium;
+  src: url(../../assets/font/Poppins-Medium.ttf);
+}
+
+.blog-page {
+  padding: 20px;
+  font-family: poppinsMedium;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.blogs-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.blog-card {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  width: 300px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.blog-card h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  margin-top: 40px !important;
+}
+.read-more {
+  text-decoration: none;
+  font-size: 14px;
+}
+.blog-card p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.blog-footer {
+  font-size: 12px;
+  color: #555;
+  margin-top: 10px;
+}
+
+.pagination {
+  margin-top: 50px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-btn {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background: #ddd;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.pagination-btn.active {
+  background: var(--primary-color);
+  font-family: poppinsBold;
+  color: #fff;
+}
+
+.pagination-btn:hover:not(.active) {
+  background: #ccc;
+}
+.blog-item1 {
+  width: 360px;
+  transition: 350ms;
+  flex: 0 0 auto;
+}
+
+.blog-item1 img {
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.blog-item1:hover .blog-content,
+.blog-item1:hover .read-more {
+  color: var(--primary-color);
+}
+@media screen and (max-width: 790px) {
+  .blog-item1 {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

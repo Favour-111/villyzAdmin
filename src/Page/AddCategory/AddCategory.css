@@ -1,0 +1,104 @@
+:root {
+  --primary-color: rgb(83, 109, 254);
+  --primary-color-light: #f3f8fb;
+  --primary-color-lighter: #e1eff8;
+  --text: #4b5966;
+}
+
+@font-face {
+  font-family: poppinsBold;
+  src: url(../../assets/font/IBMPlexSans-Bold.ttf);
+}
+
+@font-face {
+  font-family: poppinsLight;
+  src: url(../../assets/font/IBMPlexSans-Light.ttf);
+}
+
+@font-face {
+  font-family: poppinsSemiBold;
+  src: url(../../assets/font/Poppins-SemiBold.ttf);
+}
+
+@font-face {
+  font-family: poppinsRegular;
+  src: url(../../assets/font/Poppins-Medium.ttf);
+}
+@font-face {
+  font-family: poppinsMedium;
+  src: url(../../assets/font/Poppins-Medium.ttf);
+}
+.category-add-container {
+  padding: 30px;
+  border-radius: 10px;
+  background-color: white;
+}
+.input-item-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  label {
+    color: #4b5966;
+    font-family: poppinsMedium;
+    width: 250px;
+  }
+  input,
+  select {
+    width: 500px;
+    padding: 10px;
+    border: 1px solid #e3e3e3;
+    border-radius: 10px;
+    font-family: poppinsMedium;
+    outline: none;
+  }
+  ::placeholder {
+    font-family: poppinsLight;
+  }
+  button {
+    background-color: var(--primary-color);
+    padding: 10px 70px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-family: poppinsMedium;
+    transition: 250ms;
+  }
+  button:hover {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+  }
+}
+.upload-cont-img {
+  label {
+    width: 100%;
+  }
+  .label2 {
+    font-family: poppinsMedium;
+    font-size: 10px;
+    color: #4b5966;
+    width: 100%;
+  }
+  .label {
+    color: #4b596698;
+    font-family: poppinsRegular;
+    font-size: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: center;
+    span {
+      color: var(--primary-color);
+    }
+  }
+}
+.upload-img {
+  width: 500px;
+  height: 200px;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}

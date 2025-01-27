@@ -1,0 +1,104 @@
+:root {
+  --primary-color: rgb(83, 109, 254);
+  --primary-color-light: #f3f8fb;
+  --primary-color-lighter: #e1eff85b;
+  --text: #4b5966;
+}
+
+@font-face {
+  font-family: poppinsBold;
+  src: url(../../assets/font/Poppins-SemiBold.ttf);
+}
+
+@font-face {
+  font-family: poppinsLight;
+  src: url(../../assets/font/IBMPlexSans-Light.ttf);
+}
+
+@font-face {
+  font-family: poppinsSemiBold;
+  src: url(../../assets/font/Poppins-SemiBold.ttf);
+}
+
+@font-face {
+  font-family: poppinsRegular;
+  src: url(../../assets/font/Poppins-Medium.ttf);
+}
+@font-face {
+  font-family: poppinsMedium;
+  src: url(../../assets/font/Poppins-Medium.ttf);
+}
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--primary-color-light);
+}
+.login {
+  width: 400px;
+  height: 400px;
+  background-color: white;
+  margin-top: 30px;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.login-head {
+  font-family: poppinsSemiBold !important;
+  font-size: 25px;
+  color: #4b5966;
+  span {
+    color: var(--primary-color);
+  }
+}
+.login-welcome {
+  font-family: poppinsSemiBold;
+  text-transform: capitalize;
+  color: var(--primary-color);
+}
+.content {
+  color: #4b5966;
+  font-family: poppinsMedium;
+  font-size: 12px;
+}
+.input-container {
+  width: 100%;
+  margin-top: 20px;
+}
+.input {
+  margin-top: 10px;
+  width: 100%;
+  input {
+    width: 100% !important;
+    padding: 8px 8px;
+    margin-top: 5px;
+    outline: none;
+    border-color: none;
+    border: 1px solid #e3e3e3;
+    border-radius: 3px;
+  }
+  ::placeholder {
+    font-family: "poppinsRegular";
+    font-size: 14px;
+  }
+  label {
+    font-family: poppinsSemiBold;
+    font-size: 14px;
+    color: #4b5966;
+  }
+}
+.login-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 8px;
+  color: white;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 3px;
+  text-transform: capitalize;
+  font-family: poppinsRegular;
+}
