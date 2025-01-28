@@ -1,0 +1,77 @@
+:root {
+  --primary-color: rgb(83, 109, 254);
+  --primary-color-light: #f3f8fb;
+  --primary-color-lighter: #e1eff8;
+  --text: #4b5966;
+}
+
+@font-face {
+  font-family: poppinsBold;
+  src: url(../../assets/font/IBMPlexSans-Bold.ttf);
+}
+
+@font-face {
+  font-family: poppinsLight;
+  src: url(../../assets/font/IBMPlexSans-Light.ttf);
+}
+
+@font-face {
+  font-family: poppinsSemiBold;
+  src: url(../../assets/font/Poppins-SemiBold.ttf);
+}
+
+@font-face {
+  font-family: poppinsRegular;
+  src: url(../../assets/font/Poppins-Medium.ttf);
+}
+@font-face {
+  font-family: poppinsMedium;
+  src: url(../../assets/font/Poppins-Medium.ttf);
+}
+.block {
+  font-family: poppinsMedium;
+  margin-top: 10px;
+}
+.head {
+  margin: 20px;
+  font-family: poppinsBold;
+  font-size: 20px;
+  color: #4b5966;
+}
+.btn-primary {
+  margin-top: 20px;
+  font-family: poppinsMedium;
+  font-size: 13px;
+}
+.btn-secondary {
+  margin-top: 20px;
+  font-family: poppinsMedium;
+  font-size: 13px;
+}
+.btn-warning {
+  margin-top: 20px;
+  color: white;
+  font-family: poppinsMedium;
+  font-size: 13px;
+}
+.delivery-form {
+  width: 50%;
+}
+.delivery {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+@media screen and (max-width: 768px) {
+  .delivery {
+    padding: 20px;
+  }
+  .delivery-form {
+    width: 100%;
+  }
+  .head {
+    margin: 10px 0;
+    font-size: 17px;
+  }
+}

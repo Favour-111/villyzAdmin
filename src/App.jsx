@@ -14,6 +14,7 @@ import Blog from "./Page/BlogLAdd/Blog";
 import Orders from "./Page/Orders/Orders";
 import Footer from "./Component/footer/Footer";
 import Delivery from "./Page/Delivery/Delivery";
+import ManageFee from "./Page/AddFee/ManageFee";
 function App() {
   const location = useLocation(); // Get the current route location
 
@@ -33,6 +34,7 @@ function App() {
         <Route element={<Blog />} path="/addblog" />
         <Route element={<Orders />} path="/orders" />
         <Route element={<Delivery />} path="/delivery" />
+        <Route element={<ManageFee />} path="/fee" />
       </Routes>
       {location.pathname !== "/" && <Footer />}
     </div>

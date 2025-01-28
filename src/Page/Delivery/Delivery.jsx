@@ -149,62 +149,6 @@ const Delivery = () => {
     </button>
   ));
 
-  const locations = {
-    USA: {
-      price: 100,
-      states: {
-        California: 50,
-        Texas: 40,
-        Florida: 30,
-      },
-    },
-    Canada: {
-      price: 80,
-      states: {
-        Ontario: 60,
-        Quebec: 50,
-        Alberta: 40,
-      },
-    },
-    Nigeria: {
-      price: 70,
-      states: {
-        Lagos: 35,
-        Abuja: 25,
-        Kano: 20,
-      },
-    },
-  };
-
-  // State variables
-  const [selectedLocation, setSelectedLocation] = useState("");
-  const [selectedState, setSelectedState] = useState("");
-  const [totalPrice, setTotalPrice] = useState(0);
-
-  // Handle location change
-  const handleLocationChange = (e) => {
-    const location = e.target.value;
-    setSelectedLocation(location);
-    setSelectedState(""); // Reset state selection
-    if (location) {
-      const locationPrice = locations[location].price;
-      setTotalPrice(locationPrice); // Set price based on location
-    } else {
-      setTotalPrice(0); // Reset price if no location selected
-    }
-  };
-
-  // Handle state change
-  const handleStateChange = (e) => {
-    const state = e.target.value;
-    setSelectedState(state);
-    if (state) {
-      const statePrice = locations[selectedLocation].states[state];
-      const locationPrice = locations[selectedLocation].price;
-      setTotalPrice(locationPrice + statePrice); // Update total price
-    }
-  };
-
   return (
     <div className="w-100">
       <div className="product">
@@ -258,6 +202,7 @@ const Delivery = () => {
                 data-bs-whatever="@mdo"
                 type="button"
                 className="add-btn"
+                onClick={() => navigate("/fee")}
               >
                 <div>
                   <IoMdAdd />
@@ -266,90 +211,6 @@ const Delivery = () => {
               </button>
             </div>
 
-            <div
-              class="modal fade"
-              id="exampleModal"
-              tabindex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                      New Delivery
-                    </h1>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    <form>
-                      <div class="mb-3">
-                        <label htmlFor="location">Location (Country): </label>
-                        <select
-                          className="form-select"
-                          id="location"
-                          value={selectedLocation}
-                          onChange={handleLocationChange}
-                        >
-                          <option value="">-- Select Location --</option>
-                          {Object.keys(locations).map((location) => (
-                            <option key={location} value={location}>
-                              {location}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div class="mb-3">
-                        <label htmlFor="state">State: </label>
-                        <select
-                          className="form-select"
-                          id="state"
-                          value={selectedState}
-                          onChange={handleStateChange}
-                        >
-                          <option value="">-- Select State --</option>
-                          {Object.keys(locations[selectedLocation].states).map(
-                            (state) => (
-                              <option key={state} value={state}>
-                                {state}
-                              </option>
-                            )
-                          )}
-                        </select>
-                      </div>
-                      <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">
-                          Location Price
-                        </label>
-                        <input
-                          value={totalPrice}
-                          type="text"
-                          class="form-control"
-                          id="recipient-name"
-                        />
-                      </div>
-                    </form>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <button type="button" class="btn btn-primary">
-                      Send message
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div
               style={{
                 maxWidth: "100%",
