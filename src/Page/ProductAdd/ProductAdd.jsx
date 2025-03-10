@@ -10,8 +10,9 @@ const ProductAdd = () => {
   const [formData, setFormData] = useState({
     productName: "",
     oldPrice: "",
+    Rating: "",
     newPrice: "",
-    inStock: false,
+    availability: false,
     categories: [],
   });
 
@@ -43,12 +44,48 @@ const ProductAdd = () => {
     });
   };
 
-  const saveDocument = () => {
-    console.log("Document saved:", {
-      ...formData,
+  const saveDocument = async () => {
+    const productData = {
+      productName: formData.productName,
+      Rating: formData.Rating,
+      oldPrice: formData.oldPrice,
+      newPrice: formData.newPrice,
+      availability: formData.availability ? "In Stock" : "Out of Stock",
+      categories: formData.categories,
       productDescription: content,
-      productImage: selectedImage,
-    });
+    };
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("productName", productData.productName);
+    formDataToSend.append("oldPrice", productData.oldPrice);
+    formDataToSend.append("newPrice", productData.newPrice);
+    formDataToSend.append("availability", productData.availability);
+    formDataToSend.append("categories", JSON.stringify(productData.categories));
+    formDataToSend.append("productDescription", productData.productDescription);
+    formDataToSend.append("Rating", productData.Rating);
+
+    if (selectedImage) {
+      const response = await fetch(selectedImage);
+      const blob = await response.blob();
+      formDataToSend.append("productImage", blob, "product-image.jpg");
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/products", {
+        method: "POST",
+        body: formDataToSend,
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert("Product added successfully!");
+      } else {
+        alert(`Error: ${result.message}`);
+      }
+    } catch (error) {
+      console.error("Error submitting product:", error);
+      alert("Failed to submit product.");
+    }
   };
 
   const categories = [
@@ -102,6 +139,19 @@ const ProductAdd = () => {
                         }
                       />
                     </div>
+                    <div className="pricing-form-itm">
+                      <label htmlFor="">Rating</label>
+                      <br />
+                      <input
+                        type="text"
+                        className="pricing"
+                        placeholder="Product Rating"
+                        value={formData.Rating}
+                        onChange={(e) =>
+                          setFormData({ ...formData, Rating: e.target.value })
+                        }
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="availability-container shadow-sm rounded mt-3">
@@ -110,11 +160,11 @@ const ProductAdd = () => {
                     <div className="checkbox-container">
                       <input
                         type="checkbox"
-                        checked={formData.inStock}
+                        checked={formData.availability}
                         onChange={() =>
                           setFormData({
                             ...formData,
-                            inStock: !formData.inStock,
+                            availability: !formData.availability,
                           })
                         }
                       />

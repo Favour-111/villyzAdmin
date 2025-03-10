@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "../../Component/SideBar/SideBar";
 import "./Product.css";
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
@@ -8,7 +8,35 @@ import { IoEyeOutline } from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import BreadCrumb from "../../Component/BreadCrumbs/BreadCrumb";
+import axios from "axios";
 const ProductList = ({ name }) => {
+  const [product, setProduct] = useState([]);
+
+  const fetchProduct = async () => {
+    const fetchedProduct = await axios.get("http://localhost:5000/products");
+    if (fetchedProduct) {
+      setProduct(fetchedProduct.data);
+    } else {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
+      Toast.fire({
+        icon: "error",
+        title: "error fetching products try again",
+      });
+    }
+  };
+  useEffect(() => {
+    fetchProduct();
+  });
   const navigate = useNavigate();
   const productData = [
     {

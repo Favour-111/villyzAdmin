@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./ManageFee.css";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { CiEdit } from "react-icons/ci";
 const ManageFee = () => {
   const [locations, setLocations] = useState({});
   const [newLocation, setNewLocation] = useState("");
@@ -143,12 +145,26 @@ const ManageFee = () => {
                         <ul>
                           {Object.keys(locations).map((location) => (
                             <li key={location} className="mb-4">
-                              <div className="">{location}</div>
+                              <div className="d-flex align-items-center justify-content-between">
+                                <div>{location}</div>
+                                <div className="d-flex gap-2">
+                                  <div>
+                                    <RiDeleteBin6Line color="red" size={15} />
+                                  </div>
+                                  <div>
+                                    <CiEdit color="blue" size={15} />{" "}
+                                  </div>
+                                </div>
+                              </div>
                               <ul className="ml-4">
                                 {Object.keys(locations[location]).map(
                                   (state) => (
                                     <li key={state}>
                                       {state}: ${locations[location][state]}
+                                      <RiDeleteBin6Line
+                                        color="red"
+                                        className="mx-1"
+                                      />
                                     </li>
                                   )
                                 )}
