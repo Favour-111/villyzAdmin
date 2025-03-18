@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "../../Component/SideBar/SideBar";
 import "./User.css";
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
@@ -8,106 +8,54 @@ import { IoEyeOutline } from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import BreadCrumb from "../../Component/BreadCrumbs/BreadCrumb";
+import Swal from "sweetalert2";
+import axios from "axios";
 const User = ({ name }) => {
+  const [loader, setLoader] = useState(false);
+  const [productData, setProductData] = useState([]);
   const navigate = useNavigate();
-  const productData = [
-    {
-      img: "https://themesflat.co/html/remos/images/products/45.png",
-      id: 1,
-      name: "Product A",
-      category: "Electronics",
-      price: "$50",
-      stock: "out of stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/46.png",
-      id: 2,
-      name: "Product B",
-      category: "Clothing",
-      price: "$30",
-      stock: "in stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/47.png",
-      id: 3,
-      name: "Product C",
-      category: "Groceries",
-      price: "$10",
-      stock: "out of stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/48.png",
-      id: 4,
-      name: "Product D",
-      category: "Electronics",
-      price: "$70",
-      stock: "in stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/49.png",
-      id: 5,
-      name: "Product E",
-      category: "Clothing",
-      price: "$90",
-      stock: "in stock",
-    },
-    {
-      img: "",
-      id: 6,
-      name: "Product F",
-      category: "Groceries",
-      price: "$20",
-      stock: "out of stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/50.png",
-      id: 7,
-      name: "Product G",
-      category: "Electronics",
-      price: "$100",
-      stock: "out of stock",
-    },
-    {
-      img: "",
-      id: 8,
-      name: "Product H",
-      category: "Clothing",
-      price: "$40",
-      stock: "out of stock",
-    },
-    {
-      img: "",
-      id: 9,
-      name: "Product I",
-      category: "Groceries",
-      price: "$15",
-      stock: "in stock",
-    },
-    {
-      img: "",
-      id: 10,
-      name: "Product J",
-      category: "Electronics",
-      price: "$200",
-      stock: "out of stock",
-    },
-    {
-      img: "",
-      id: 11,
-      name: "Product K",
-      category: "Clothing",
-      price: "$25",
-      stock: "in stock",
-    },
-    {
-      img: "",
-      id: 12,
-      name: "Product L",
-      category: "Groceries",
-      price: "$5",
-      stock: "out of stock",
-    },
-  ];
+  const getallUser = async () => {
+    try {
+      setLoader(false);
+      const response = await axios.get(
+        "https://villyzstore.onrender.com/alluser"
+      );
+      if (response) {
+        setProductData(response.data.users);
+        Swal.fire({
+          icon: "success",
+          title: "users gotten successfully!",
+          timer: 3000,
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+        });
+      } else {
+        Swal.fire({
+          icon: "success",
+          title: "error fetching users!",
+          timer: 3000,
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "success",
+        title: error.message,
+        timer: 3000,
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+      });
+    } finally {
+      setLoader(false);
+    }
+  };
+  useEffect(() => {
+    getallUser();
+  }, []);
 
   // State management
   const [searchTerm, setSearchTerm] = useState(""); // For search bar
@@ -123,7 +71,7 @@ const User = ({ name }) => {
 
   // Filter products based on search term
   const filteredProducts = productData.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    product.FirstName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Calculate pagination
@@ -214,41 +162,23 @@ const User = ({ name }) => {
                     <th>user</th>
                     <th>Phone number</th>
                     <th>email</th>
-
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {currentProducts.length > 0 ? (
-                    currentProducts.map((product) => (
-                      <tr key={product.id}>
-                        <td>
-                          <img
-                            width={40}
-                            height={40}
-                            src={product.img}
-                            alt=""
-                          />
-                          {product.name}
-                        </td>
-                        <td>{product.id}</td>
-                        <td>{product.category}</td>
+                    loader ? (
+                      <div className="text-center">loading....</div>
+                    ) : (
+                      currentProducts.map((product, i) => (
+                        <tr key={product.i + 1}>
+                          <td>{product.FirstName}</td>
+                          <td>{product.phoneNumber}</td>
+                          <td>{product.email}</td>
 
-                        <td>
-                          <div className="d-flex align-items-center gap-2 actionIcons">
-                            <div className="EyeIcn">
-                              <IoEyeOutline size={20} color="blue" />
-                            </div>
-                            <div className="EditIcn">
-                              <CiEdit size={20} color="green" />
-                            </div>
-                            <div className="DeleteIcn">
-                              <RiDeleteBin6Line size={20} color="red" />
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    ))
+                          <td></td>
+                        </tr>
+                      ))
+                    )
                   ) : (
                     <tr>
                       <td

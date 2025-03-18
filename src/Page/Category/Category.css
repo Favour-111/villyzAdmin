@@ -8,7 +8,24 @@
   align-self: center;
   justify-content: space-between;
 }
-
+.out {
+  color: red !important;
+  width: 70px;
+  font-size: 10px;
+  text-align: center;
+  border-radius: 5px;
+  text-transform: capitalize;
+  background-color: rgba(255, 0, 0, 0.158) !important;
+}
+.in {
+  color: rgb(10, 174, 10) !important;
+  width: 70px;
+  font-size: 10px;
+  text-align: center;
+  border-radius: 5px;
+  text-transform: capitalize;
+  background-color: rgba(0, 255, 0, 0.167) !important;
+}
 @media screen and (max-width: 768px) {
   .search-order {
     margin-left: 0;

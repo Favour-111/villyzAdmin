@@ -110,13 +110,30 @@
 }
 
 .blog-item1 img {
-  max-width: 100%;
+  width: 300px;
+  height: 200px;
   border-radius: 5px;
 }
 
 .blog-item1:hover .blog-content,
 .blog-item1:hover .read-more {
   color: var(--primary-color);
+}
+.Blog-image img {
+  width: 100%;
+  height: 300px;
+}
+.Blog_title {
+  font-size: 23px;
+  font-family: poppinsSemiBold;
+}
+.Blog_date {
+  font-size: 15px;
+  font-family: poppinsMedium;
+}
+.Blog_description {
+  font-size: 15px;
+  font-family: poppinsMedium;
 }
 @media screen and (max-width: 790px) {
   .blog-item1 {

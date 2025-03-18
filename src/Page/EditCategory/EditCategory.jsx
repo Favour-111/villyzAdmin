@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BreadCrumb from "../../Component/BreadCrumbs/BreadCrumb";
 import Swal from "sweetalert2";
 import axios from "axios";
-import "./AddCategory.css";
+import "./EditCategory.css";
+import { useParams } from "react-router-dom";
 
-const AddCategory = () => {
+const EditCategory = () => {
+  const { id } = useParams();
   const [loader, setLoader] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [form, setForm] = useState({
     name: "",
     visibility: "",
-    image: null,
+    image: "",
   });
 
   const handleInput = (e) => {
@@ -33,33 +35,36 @@ const AddCategory = () => {
 
   const saveDocument = async (e) => {
     e.preventDefault();
-    if (!form.name || !form.visibility || !form.image) {
+    if (!form.name || !form.visibility) {
       return Swal.fire({ icon: "error", title: "All fields are required!" });
     }
 
     const formData = new FormData();
     formData.append("name", form.name);
     formData.append("visibility", form.visibility);
-    formData.append("image", form.image);
+
+    // Append image only if a new one is selected
+    if (form.image instanceof File) {
+      formData.append("image", form.image);
+    }
 
     try {
       setLoader(true);
-      const response = await axios.post(
-        "https://villyzstore.onrender.com/category",
+      const response = await axios.put(
+        `https://villyzstore.onrender.com/category/${id}`,
         formData
       );
       if (response) {
         Swal.fire({
           icon: "success",
-          title: "Category added successfully!",
+          title: "Category updated successfully!",
           timer: 3000,
           toast: true,
           position: "top-end",
           showConfirmButton: false,
         });
 
-        // Reset form state
-        setForm({ name: "", visibility: "", image: null });
+        // Reset selected image only, keep existing image URL
         setSelectedImage(null);
       }
     } catch (error) {
@@ -69,9 +74,33 @@ const AddCategory = () => {
     }
   };
 
+  const getCategory = async () => {
+    try {
+      const response = await axios.get(
+        `https://villyzstore.onrender.com/category/${id}`
+      );
+      const res = response.data.response;
+
+      setForm({
+        name: res.name,
+        visibility: res.visibility,
+        image: res.image, // Keep the image URL from backend
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Failed to load category",
+      });
+    }
+  };
+
+  useEffect(() => {
+    getCategory();
+  }, []);
+
   return (
     <div className="product">
-      <BreadCrumb name="Category Create" />
+      <BreadCrumb name="Edit Category" />
       <div className="p-4">
         <div className="category-add-container shadow">
           <div className="input-item-container">
@@ -105,18 +134,23 @@ const AddCategory = () => {
                       objectFit: "cover",
                     }}
                   />
+                ) : form.image ? (
+                  <img
+                    src={form.image}
+                    alt="Existing"
+                    style={{
+                      width: "160px",
+                      height: "160px",
+                      objectFit: "cover",
+                    }}
+                  />
                 ) : (
-                  <>
-                    <img
-                      width="64"
-                      height="64"
-                      src="https://img.icons8.com/wired/64/upload.png"
-                      alt="upload"
-                    />
-                    <label className="label">
-                      Drop your images here or <span>click to browse</span>
-                    </label>
-                  </>
+                  <img
+                    width="64"
+                    height="64"
+                    src="/placeholder.png"
+                    alt="upload"
+                  />
                 )}
               </div>
               <input
@@ -153,4 +187,4 @@ const AddCategory = () => {
   );
 };
 
-export default AddCategory;
+export default EditCategory;

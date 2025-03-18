@@ -15,6 +15,8 @@ import Orders from "./Page/Orders/Orders";
 import Footer from "./Component/footer/Footer";
 import Delivery from "./Page/Delivery/Delivery";
 import ManageFee from "./Page/AddFee/ManageFee";
+import ProductEdit from "./Page/ProductEdit/ProductEdit";
+import EditCategory from "./Page/EditCategory/EditCategory";
 function App() {
   const location = useLocation(); // Get the current route location
 
@@ -27,7 +29,9 @@ function App() {
         <Route element={<Landing />} path="/page" />
         <Route element={<ProductList />} path="/product" />
         <Route element={<ProductAdd />} path="/productadd" />
+        <Route element={<ProductEdit />} path="/productedit/:id" />
         <Route element={<AddCategory />} path="/categoryadd" />
+        <Route element={<EditCategory />} path="/editCategory/:id" />
         <Route element={<Category />} path="/category" />
         <Route element={<User />} path="/user" />
         <Route element={<BlogPage />} path="/blogs" />

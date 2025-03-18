@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "../../Component/SideBar/SideBar";
 import "./Landing.css";
 import { Line } from "react-chartjs-2";
@@ -17,6 +17,9 @@ import { FaPaperclip } from "react-icons/fa6";
 import Graph from "../../Component/Graph/Graph";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../Component/footer/Footer";
+import axios from "axios";
+import Swal from "sweetalert2";
+
 // Register necessary chart components
 ChartJS.register(
   LineElement,
@@ -27,105 +30,50 @@ ChartJS.register(
   Tooltip
 );
 const Landing = () => {
+  const [product, setProduct] = useState([]);
+  const [prod, setProd] = useState([]);
+  const [user, setUser] = useState([]);
+  const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
-  const productData = [
-    {
-      img: "https://themesflat.co/html/remos/images/products/45.png",
-      id: 1,
-      name: "Product A",
-      category: "Electronics",
-      price: "$50",
-      stock: "out of stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/46.png",
-      id: 2,
-      name: "Product B",
-      category: "Clothing",
-      price: "$30",
-      stock: "in stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/47.png",
-      id: 3,
-      name: "Product C",
-      category: "Groceries",
-      price: "$10",
-      stock: "out of stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/48.png",
-      id: 4,
-      name: "Product D",
-      category: "Electronics",
-      price: "$70",
-      stock: "in stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/49.png",
-      id: 5,
-      name: "Product E",
-      category: "Clothing",
-      price: "$90",
-      stock: "in stock",
-    },
-    {
-      img: "",
-      id: 6,
-      name: "Product F",
-      category: "Groceries",
-      price: "$20",
-      stock: "out of stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/50.png",
-      id: 7,
-      name: "Product G",
-      category: "Electronics",
-      price: "$100",
-      stock: "out of stock",
-    },
-    {
-      img: "",
-      id: 8,
-      name: "Product H",
-      category: "Clothing",
-      price: "$40",
-      stock: "out of stock",
-    },
-    {
-      img: "",
-      id: 9,
-      name: "Product I",
-      category: "Groceries",
-      price: "$15",
-      stock: "in stock",
-    },
-    {
-      img: "",
-      id: 10,
-      name: "Product J",
-      category: "Electronics",
-      price: "$200",
-      stock: "out of stock",
-    },
-    {
-      img: "",
-      id: 11,
-      name: "Product K",
-      category: "Clothing",
-      price: "$25",
-      stock: "in stock",
-    },
-    {
-      img: "",
-      id: 12,
-      name: "Product L",
-      category: "Groceries",
-      price: "$5",
-      stock: "out of stock",
-    },
-  ];
+
+  const fetchProduct = async () => {
+    try {
+      setLoader(true);
+      const fetchedProduct = await axios.get(
+        "https://villyzstore.onrender.com/getallProducts"
+      );
+      if (fetchedProduct) {
+        setProd(fetchedProduct.data.response);
+      } else {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "error",
+          title: "error fetching products try again",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: error.message,
+      });
+    } finally {
+      setLoader(false);
+    }
+  };
+  useEffect(() => {
+    fetchProduct();
+  }, []);
+
   const data = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     datasets: [
@@ -208,6 +156,48 @@ const Landing = () => {
       },
     },
   };
+  const getallUser = async () => {
+    try {
+      setLoader(false);
+      const response = await axios.get(
+        "https://villyzstore.onrender.com/alluser"
+      );
+      if (response) {
+        setUser(response.data.users);
+        Swal.fire({
+          icon: "success",
+          title: "users gotten successfully!",
+          timer: 3000,
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+        });
+      } else {
+        Swal.fire({
+          icon: "success",
+          title: "error fetching users!",
+          timer: 3000,
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "success",
+        title: error.message,
+        timer: 3000,
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+      });
+    } finally {
+      setLoader(false);
+    }
+  };
+  useEffect(() => {
+    getallUser();
+  }, []);
 
   return (
     <div>
@@ -395,22 +385,21 @@ const Landing = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {productData.length > 0 ? (
-                      productData.slice(0, 3).map((product) => (
-                        <tr key={product.id}>
-                          <td onClick={() => navigate("/user")}>
-                            <img
-                              width={40}
-                              height={40}
-                              src={product.img}
-                              alt=""
-                            />
-                            {product.name}
-                          </td>
-                          <td>{product.id}</td>
-                          <td>{product.category}</td>
-                        </tr>
-                      ))
+                    {loader ? (
+                      <div className="text-center">loading...</div>
+                    ) : user.length > 0 ? (
+                      user
+                        .slice(0, 4)
+                        .reverse()
+                        .map((product) => (
+                          <tr key={product.id}>
+                            <td onClick={() => navigate("/user")}>
+                              {product.FirstName}
+                            </td>
+                            <td>{product.phoneNumber}</td>
+                            <td>{product.email}</td>
+                          </tr>
+                        ))
                     ) : (
                       <tr>
                         <td
@@ -435,48 +424,49 @@ const Landing = () => {
                       <th>Product ID</th>
                       <th>Category</th>
                       <th>Price</th>
-                      <th>stock</th>
+                      <th>Stock</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {productData.length > 0 ? (
-                      productData.slice(0, 3).map((product) => (
-                        <tr key={product.id}>
-                          <td
-                            style={{ cursor: "pointer" }}
-                            onClick={() => navigate("/product")}
-                          >
-                            <img
-                              width={40}
-                              height={40}
-                              src={product.img}
-                              alt=""
-                            />
-                            {product.name}
-                          </td>
-                          <td>{product.id}</td>
-                          <td>{product.category}</td>
-                          <td>{product.price}</td>
-                          <td>
-                            <div
-                              className={
-                                product.stock === "out of stock" ? "out" : "in"
-                              }
-                            >
-                              {product.stock}
-                            </div>
-                          </td>
-                        </tr>
-                      ))
-                    ) : (
+                    {loader ? (
                       <tr>
-                        <td
-                          colSpan="6"
-                          style={{ textAlign: "center", padding: "10px" }}
-                        >
-                          No products found
+                        <td colSpan="5" className="text-center">
+                          Loading...
                         </td>
                       </tr>
+                    ) : (
+                      prod
+                        .slice(0, 5)
+                        .reverse()
+                        .map((product) => (
+                          <tr key={product.id}>
+                            <td
+                              style={{ cursor: "pointer" }}
+                              onClick={() => navigate("/product")}
+                            >
+                              <img
+                                width={40}
+                                height={40}
+                                src={product.image}
+                                alt=""
+                              />
+                            </td>
+                            <td>{product.id}</td>
+                            <td>{product.categories}</td>
+                            <td>{product.newPrice}</td>
+                            <td>
+                              <div
+                                className={
+                                  product.availability === "out of stock"
+                                    ? "out"
+                                    : "in"
+                                }
+                              >
+                                {product.availability}
+                              </div>
+                            </td>
+                          </tr>
+                        ))
                     )}
                   </tbody>
                 </table>

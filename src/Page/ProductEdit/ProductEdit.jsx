@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import "./ProductAdd.css";
+import React, { useState, useEffect } from "react";
+import "./ProductEdit.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import Quill's CSS for styling
 import BreadCrumb from "../../Component/BreadCrumbs/BreadCrumb";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import axios from "axios";
-
-const ProductAdd = () => {
+import { Link, useParams } from "react-router-dom";
+const ProductEdit = () => {
   const [loader, setLoader] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null); // State to store the selected imag
+  const { id } = useParams();
   const [category, setCategory] = useState([]);
-  const [imageUrl, setImageUrl] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null); // State to store the selected imag
   const [form, setForm] = useState({
     productName: "",
     newPrice: "",
@@ -21,33 +21,27 @@ const ProductAdd = () => {
     categories: "",
     availability: "",
     image: null,
-    deals: false,
+    deals: "",
   });
+
   const handleInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setForm({ ...form, [name]: value });
   };
 
-  // const handleContentChange = (value) => {
-  //   setContent(value); // Update state when content changes
-  // };
   const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
 
     if (imageFile) {
-      setForm({ ...form, image: imageFile });
-      setSelectedImage(URL.createObjectURL(imageFile));
-      setImageUrl(""); // Clear the image URL field
-    }
-  };
+      setForm((prevForm) => ({
+        ...prevForm,
+        image: imageFile, // Store the image file
+      }));
 
-  // Handle image URL input
-  const handleImageUrlChange = (e) => {
-    const url = e.target.value;
-    setImageUrl(url);
-    setForm({ ...form, image: url });
-    setSelectedImage(url); // Display the image preview
+      const imageUrl = URL.createObjectURL(imageFile);
+      setSelectedImage(imageUrl); // Store the image preview URL
+    }
   };
 
   const saveDocument = async (e) => {
@@ -59,11 +53,7 @@ const ProductAdd = () => {
     formData.append("availability", form.availability);
     formData.append("productDescription", form.productDescription);
     formData.append("categories", form.categories);
-    if (imageUrl) {
-      formData.append("image", imageUrl);
-    } else if (form.image) {
-      formData.append("image", form.image);
-    }
+    formData.append("image", form.image);
     formData.append("deals", form.deals);
     e.preventDefault();
 
@@ -75,7 +65,7 @@ const ProductAdd = () => {
       form.productDescription === "" ||
       form.categories === "" ||
       form.availability === "" ||
-      (!form.image && !imageUrl)
+      form.image === null
     ) {
       Swal.fire({
         icon: "error",
@@ -84,8 +74,8 @@ const ProductAdd = () => {
     } else {
       try {
         setLoader(true);
-        const response = await axios.post(
-          "https://villyzstore.onrender.com/products",
+        const response = await axios.put(
+          `https://villyzstore.onrender.com/products/${id}`,
           formData
         );
         if (response) {
@@ -104,19 +94,6 @@ const ProductAdd = () => {
             icon: "success",
             title: "Added successfully",
           });
-          setForm({
-            productName: "",
-            newPrice: "",
-            Rating: "",
-            oldPrice: "",
-            categories: "",
-            availability: "",
-            productDescription: "",
-            image: null,
-            deals: false,
-          });
-          setSelectedImage(null);
-          setImageUrl("");
         } else {
           const Toast = Swal.mixin({
             toast: true,
@@ -157,6 +134,35 @@ const ProductAdd = () => {
     }
   };
 
+  const getProduct = async () => {
+    try {
+      const response = await axios.get(
+        `https://villyzstore.onrender.com/products/${id}`
+      );
+      const res = response.data.response;
+
+      setForm({
+        productName: res.productName,
+        Rating: res.Rating,
+        availability: res.availability,
+        newPrice: res.newPrice,
+        oldPrice: res.oldPrice,
+        categories: res.categories,
+        productDescription: res.productDescription,
+        image: res.image,
+        deals: res.deals,
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Failed to load product",
+      });
+    }
+  };
+
+  useEffect(() => {
+    getProduct();
+  }, [id]);
   const getallCategory = async () => {
     try {
       setLoader(false);
@@ -221,13 +227,12 @@ const ProductAdd = () => {
   useEffect(() => {
     getallCategory();
   }, []);
-
   return (
     <div className="product">
-      <BreadCrumb name="product create" />
+      <BreadCrumb name="product edit" />
       <div className="create-product-container">
         <button className="Add-btn" disabled={loader} onClick={saveDocument}>
-          {loader ? "Please wait..." : "Save Product"}
+          {loader ? "Please wait..." : "Update Product"}
         </button>
 
         <div className="container">
@@ -235,7 +240,7 @@ const ProductAdd = () => {
             <div className="col-xl-5 col-sm-12">
               <div className="left-side">
                 <div className="pricing-container shadow-sm rounded">
-                  <div className="pricing-head">Product Pricing</div>
+                  <div className="pricing-head">Product Edit</div>
                   <div className="pricing-form-cont">
                     <div className="pricing-form-itm">
                       <label htmlFor="">Old Price</label>
@@ -282,9 +287,9 @@ const ProductAdd = () => {
                     <select
                       className="pricing"
                       name="availability"
-                      value={form.availability}
                       onChange={handleInput}
                       id=""
+                      value={form.availability}
                     >
                       <option value="none">Availability</option>
                       <option value="in Stock">in Stock</option>
@@ -295,12 +300,12 @@ const ProductAdd = () => {
                     <label htmlFor="">type</label>
                     <select
                       className="pricing"
-                      name="deals"
                       value={form.deals}
+                      name="deals"
                       onChange={handleInput}
                       id=""
                     >
-                      <option value="none">Type</option>
+                      <option value="">Type</option>
                       <option value="Deal">Deal</option>
                       <option value="None">None</option>
                     </select>
@@ -312,7 +317,6 @@ const ProductAdd = () => {
                     <label htmlFor="">Categories</label>
                     <select
                       className="pricing"
-                      name="categories"
                       value={form.categories}
                       onChange={handleInput}
                       id=""
@@ -338,8 +342,8 @@ const ProductAdd = () => {
                       type="text"
                       placeholder="Input product name"
                       onChange={handleInput}
-                      value={form.productName}
                       name="productName"
+                      value={form.productName}
                     />
                   </div>
                 </div>
@@ -354,7 +358,6 @@ const ProductAdd = () => {
                     value={form.productDescription}
                   ></textarea>
                 </div>
-                {/* image */}
                 <div className="upload-cont">
                   <label htmlFor="file-input">Product Image Upload</label>
                   <input
@@ -383,15 +386,14 @@ const ProductAdd = () => {
                     ) : (
                       <>
                         <img
-                          width="64"
-                          height="64"
-                          src="https://img.icons8.com/wired/64/upload.png"
+                          style={{
+                            width: "160px",
+                            height: "160px",
+                            objectFit: "cover",
+                          }}
+                          src={form.image}
                           alt="upload"
                         />
-                        <label htmlFor="file-input" className="label">
-                          Drop your images here or select{" "}
-                          <span>click to browse</span>
-                        </label>
                       </>
                     )}
                   </label>
@@ -403,14 +405,6 @@ const ProductAdd = () => {
                     onChange={handleImageChange}
                   />
                 </div>
-                <p>or</p>
-                <input
-                  type="text"
-                  placeholder="Enter image URL"
-                  value={imageUrl}
-                  onChange={handleImageUrlChange}
-                  disabled={form.image !== null} // Disable if file is selected
-                />
               </div>
             </div>
           </div>
@@ -420,4 +414,4 @@ const ProductAdd = () => {
   );
 };
 
-export default ProductAdd;
+export default ProductEdit;

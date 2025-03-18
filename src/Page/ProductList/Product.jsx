@@ -9,133 +9,51 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import BreadCrumb from "../../Component/BreadCrumbs/BreadCrumb";
 import axios from "axios";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 const ProductList = ({ name }) => {
-  const [product, setProduct] = useState([]);
+  const [productData, setProduct] = useState([]);
+  const [loader, setLoader] = useState(false);
+  const [Deleteloader, setDeleteLoader] = useState(false);
+  const navigate = useNavigate();
 
   const fetchProduct = async () => {
-    const fetchedProduct = await axios.get("http://localhost:5000/products");
-    if (fetchedProduct) {
-      setProduct(fetchedProduct.data);
-    } else {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
-      Toast.fire({
+    try {
+      setLoader(true);
+      const fetchedProduct = await axios.get(
+        "https://villyzstore.onrender.com/getallProducts"
+      );
+      if (fetchedProduct) {
+        setProduct(fetchedProduct.data.response);
+      } else {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "error",
+          title: "error fetching products try again",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
         icon: "error",
-        title: "error fetching products try again",
+        title: error.message,
       });
+    } finally {
+      setLoader(false);
     }
   };
   useEffect(() => {
     fetchProduct();
-  });
-  const navigate = useNavigate();
-  const productData = [
-    {
-      img: "https://themesflat.co/html/remos/images/products/45.png",
-      id: 1,
-      name: "Product A",
-      category: "Electronics",
-      price: "$50",
-      stock: "out of stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/46.png",
-      id: 2,
-      name: "Product B",
-      category: "Clothing",
-      price: "$30",
-      stock: "in stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/47.png",
-      id: 3,
-      name: "Product C",
-      category: "Groceries",
-      price: "$10",
-      stock: "out of stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/48.png",
-      id: 4,
-      name: "Product D",
-      category: "Electronics",
-      price: "$70",
-      stock: "in stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/49.png",
-      id: 5,
-      name: "Product E",
-      category: "Clothing",
-      price: "$90",
-      stock: "in stock",
-    },
-    {
-      img: "",
-      id: 6,
-      name: "Product F",
-      category: "Groceries",
-      price: "$20",
-      stock: "out of stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/50.png",
-      id: 7,
-      name: "Product G",
-      category: "Electronics",
-      price: "$100",
-      stock: "out of stock",
-    },
-    {
-      img: "",
-      id: 8,
-      name: "Product H",
-      category: "Clothing",
-      price: "$40",
-      stock: "out of stock",
-    },
-    {
-      img: "",
-      id: 9,
-      name: "Product I",
-      category: "Groceries",
-      price: "$15",
-      stock: "in stock",
-    },
-    {
-      img: "",
-      id: 10,
-      name: "Product J",
-      category: "Electronics",
-      price: "$200",
-      stock: "out of stock",
-    },
-    {
-      img: "",
-      id: 11,
-      name: "Product K",
-      category: "Clothing",
-      price: "$25",
-      stock: "in stock",
-    },
-    {
-      img: "",
-      id: 12,
-      name: "Product L",
-      category: "Groceries",
-      price: "$5",
-      stock: "out of stock",
-    },
-  ];
+  }, []);
 
   // State management
   const [searchTerm, setSearchTerm] = useState(""); // For search bar
@@ -151,7 +69,7 @@ const ProductList = ({ name }) => {
 
   // Filter products based on search term
   const filteredProducts = productData.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    product?.productName?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Calculate pagination
@@ -177,6 +95,43 @@ const ProductList = ({ name }) => {
       {index + 1}
     </button>
   ));
+
+  const handleDelete = async (id) => {
+    try {
+      setDeleteLoader(true);
+
+      const response = await axios.delete(
+        `https://villyzstore.onrender.com/products/delete/${id}`
+      );
+
+      if (response.data.success) {
+        setProduct((prevProducts) =>
+          prevProducts.filter((product) => product._id !== id)
+        );
+
+        Swal.fire({
+          icon: "success",
+          title: "Product deleted successfully",
+          timer: 3000,
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: response.data.message || "Error deleting product",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: error.message || "Something went wrong",
+      });
+    } finally {
+      setDeleteLoader(false);
+    }
+  };
 
   return (
     <div className="w-100">
@@ -259,40 +214,55 @@ const ProductList = ({ name }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentProducts.length > 0 ? (
-                    currentProducts.map((product) => (
+                  {loader ? (
+                    <div className="text-center">loading...</div>
+                  ) : currentProducts.length > 0 ? (
+                    currentProducts.map((product, index) => (
                       <tr key={product.id}>
                         <td>
                           <img
                             width={40}
                             height={40}
-                            src={product.img}
+                            src={product.image}
                             alt=""
                           />
-                          {product.name}
+                          {product.productName}
                         </td>
-                        <td>{product.id}</td>
-                        <td>{product.category}</td>
-                        <td>{product.price}</td>
+                        <td>{index + 1}</td>
+                        <td>{product.categories}</td>
+                        <td>{product.newPrice}</td>
                         <td>
                           <div
                             className={
-                              product.stock === "out of stock" ? "out" : "in"
+                              product.availability === "in Stock" ? "in" : "out"
                             }
                           >
-                            {product.stock}
+                            {product.availability === "in Stock"
+                              ? "in Stock"
+                              : "out Of Stock"}
                           </div>
                         </td>
+
                         <td>
                           <div className="d-flex align-items-center gap-2 actionIcons">
-                            <div className="EyeIcn">
-                              <IoEyeOutline size={20} color="blue" />
-                            </div>
-                            <div className="EditIcn">
+                            <div
+                              className="EditIcn"
+                              onClick={() =>
+                                navigate(`/productedit/${product._id}`)
+                              }
+                            >
                               <CiEdit size={20} color="green" />
                             </div>
-                            <div className="DeleteIcn">
-                              <RiDeleteBin6Line size={20} color="red" />
+
+                            <div
+                              className="DeleteIcn"
+                              onClick={() => handleDelete(product._id)}
+                            >
+                              {Deleteloader ? (
+                                "wait.."
+                              ) : (
+                                <RiDeleteBin6Line size={20} color="red" />
+                              )}
                             </div>
                           </div>
                         </td>
