@@ -21,67 +21,67 @@ const Blog = () => {
   };
 
   const handleSubmit = async () => {
+    if (loader) return; // Prevent multiple clicks
+    setLoader(true);
+
     const formData = new FormData();
     formData.append("BlogTitle", BlogTitle);
     formData.append("BlogDate", BlogDate);
     formData.append("BlogDescription", BlogDescription);
     formData.append("BlogVisibility", BlogVisibility);
     formData.append("image", image);
+
     if (
-      BlogTitle === "" ||
-      BlogDate === "" ||
-      BlogDescription === "" ||
-      BlogVisibility === "" ||
-      image === ""
+      !BlogTitle ||
+      !BlogDate ||
+      !BlogDescription ||
+      !BlogVisibility ||
+      !image
     ) {
       Swal.fire({
         icon: "error",
-        title: "input field is required",
+        title: "All fields are required",
         timer: 3000,
         toast: true,
         position: "top-end",
         showConfirmButton: false,
       });
-    } else {
-      try {
-        setLoader(true);
-        await axios.post("https://villyzstore.onrender.com/blog", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+      setLoader(false);
+      return;
+    }
 
-        Swal.fire({
-          icon: "success",
-          title: "Blog created successfully!",
-          timer: 3000,
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-        });
+    try {
+      await axios.post("https://villyzstore.onrender.com/blog", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
-        // Reset form fields
-        setBlogTitle("");
-        setBlogDate("");
-        setBlogDescription("");
-        setBlogVisibility("hidden");
-        setImage(null);
-        setSelectedImage(null);
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title:
-            error.response?.data?.message ||
-            error.message ||
-            "Error creating blog!",
-          timer: 3000,
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-        });
-      } finally {
-        setLoader(false);
-      }
+      Swal.fire({
+        icon: "success",
+        title: "Blog created successfully!",
+        timer: 3000,
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+      });
+
+      // Reset form fields
+      setBlogTitle("");
+      setBlogDate("");
+      setBlogDescription("");
+      setBlogVisibility("hidden");
+      setImage(null);
+      setSelectedImage(null);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: error.response?.data?.message || "Error creating blog!",
+        timer: 3000,
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+      });
+    } finally {
+      setLoader(false);
     }
   };
 

@@ -305,9 +305,9 @@ const ProductEdit = () => {
                       onChange={handleInput}
                       id=""
                     >
-                      <option value="">Type</option>
+                      <option value="none">none</option>
                       <option value="Deal">Deal</option>
-                      <option value="None">None</option>
+                      <option value="bestSellers">Best Sellers</option>
                     </select>
                   </div>
                 </div>
