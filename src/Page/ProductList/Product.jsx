@@ -226,7 +226,7 @@ const ProductList = ({ name }) => {
                             src={product.image}
                             alt=""
                           />
-                          {product.productName}
+                          {product.productName.slice(0, 40)}
                         </td>
                         <td>{index + 1}</td>
                         <td>{product.categories}</td>
