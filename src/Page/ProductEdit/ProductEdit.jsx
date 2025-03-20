@@ -25,9 +25,18 @@ const ProductEdit = () => {
   });
 
   const handleInput = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setForm({ ...form, [name]: value });
+    const { name, value } = e.target;
+    setForm((prevForm) => ({
+      ...prevForm,
+      [name]: value,
+    }));
+  };
+
+  const handleQuillChange = (content) => {
+    setForm((prevForm) => ({
+      ...prevForm,
+      productDescription: content,
+    }));
   };
 
   const handleImageChange = (e) => {
@@ -61,7 +70,6 @@ const ProductEdit = () => {
       form.productName === "" ||
       form.newPrice === "" ||
       form.Rating === "" ||
-      form.oldPrice === "" ||
       form.productDescription === "" ||
       form.categories === "" ||
       form.availability === "" ||
@@ -350,13 +358,14 @@ const ProductEdit = () => {
                 <div className="input-cont mt-4">
                   <label htmlFor="">Product Description</label>
                   <br />
-                  <textarea
-                    type="text"
-                    placeholder="Input product description"
-                    onChange={handleInput}
-                    name="productDescription"
+                  <ReactQuill
+                    theme="snow"
+                    style={{ height: "200px" }}
                     value={form.productDescription}
-                  ></textarea>
+                    onChange={handleQuillChange}
+                    // Update state on change
+                    placeholder="Enter product description..."
+                  />
                 </div>
                 <div className="upload-cont">
                   <label htmlFor="file-input">Product Image Upload</label>

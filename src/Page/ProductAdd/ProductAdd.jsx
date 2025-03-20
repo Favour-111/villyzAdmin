@@ -346,13 +346,15 @@ const ProductAdd = () => {
                 <div className="input-cont mt-4">
                   <label htmlFor="">Product Description</label>
                   <br />
-                  <textarea
-                    type="text"
-                    placeholder="Input product description"
-                    onChange={handleInput}
-                    name="productDescription"
-                    value={form.productDescription}
-                  ></textarea>
+                  <ReactQuill
+                    theme="snow"
+                    style={{ height: "200px" }}
+                    value={form.productDescription} // Ensure ReactQuill has the correct value
+                    onChange={(value) =>
+                      setForm({ ...form, productDescription: value })
+                    } // Update state on change
+                    placeholder="Enter product description..."
+                  />
                 </div>
                 {/* image */}
                 <div className="upload-cont">
