@@ -71,7 +71,6 @@ const ProductAdd = () => {
       form.productName === "" ||
       form.newPrice === "" ||
       form.Rating === "" ||
-      form.oldPrice === "" ||
       form.productDescription === "" ||
       form.categories === "" ||
       form.availability === "" ||
@@ -113,7 +112,7 @@ const ProductAdd = () => {
             availability: "",
             productDescription: "",
             image: null,
-            deals: false,
+            deals: "",
           });
           setSelectedImage(null);
           setImageUrl("");
