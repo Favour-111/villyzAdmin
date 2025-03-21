@@ -112,7 +112,7 @@ const ProductAdd = () => {
             availability: "",
             productDescription: "",
             image: null,
-            deals: "",
+            deals: "none",
           });
           setSelectedImage(null);
           setImageUrl("");
