@@ -8,106 +8,41 @@ import { IoEyeOutline } from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import BreadCrumb from "../../Component/BreadCrumbs/BreadCrumb";
+import axios from "axios";
+import { useEffect } from "react";
 const Orders = () => {
   const navigate = useNavigate();
-  const productData = [
-    {
-      img: "https://themesflat.co/html/remos/images/products/45.png",
-      id: 1,
-      name: "Product A",
-      category: "Electronics",
-      price: "$50",
-      stock: "out of stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/46.png",
-      id: 2,
-      name: "Product B",
-      category: "Clothing",
-      price: "$30",
-      stock: "in stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/47.png",
-      id: 3,
-      name: "Product C",
-      category: "Groceries",
-      price: "$10",
-      stock: "out of stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/48.png",
-      id: 4,
-      name: "Product D",
-      category: "Electronics",
-      price: "$70",
-      stock: "in stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/49.png",
-      id: 5,
-      name: "Product E",
-      category: "Clothing",
-      price: "$90",
-      stock: "in stock",
-    },
-    {
-      img: "",
-      id: 6,
-      name: "Product F",
-      category: "Groceries",
-      price: "$20",
-      stock: "out of stock",
-    },
-    {
-      img: "https://themesflat.co/html/remos/images/products/50.png",
-      id: 7,
-      name: "Product G",
-      category: "Electronics",
-      price: "$100",
-      stock: "out of stock",
-    },
-    {
-      img: "",
-      id: 8,
-      name: "Product H",
-      category: "Clothing",
-      price: "$40",
-      stock: "out of stock",
-    },
-    {
-      img: "",
-      id: 9,
-      name: "Product I",
-      category: "Groceries",
-      price: "$15",
-      stock: "in stock",
-    },
-    {
-      img: "",
-      id: 10,
-      name: "Product J",
-      category: "Electronics",
-      price: "$200",
-      stock: "out of stock",
-    },
-    {
-      img: "",
-      id: 11,
-      name: "Product K",
-      category: "Clothing",
-      price: "$25",
-      stock: "in stock",
-    },
-    {
-      img: "",
-      id: 12,
-      name: "Product L",
-      category: "Groceries",
-      price: "$5",
-      stock: "out of stock",
-    },
-  ];
+  const [productData, setProductData] = useState([]);
+  const [loader, setLoader] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [expandedProductId, setExpandedProductId] = useState(null);
+  const toggleProductName = (itemId) => {
+    setExpandedProductId(expandedProductId === itemId ? null : itemId);
+  };
+
+  const fetchOrders = async () => {
+    try {
+      setLoader(true);
+      const response = await axios.get(
+        "https://villyzstore.onrender.com/allOrders"
+      );
+      console.log(response);
+
+      if (response) {
+        setProductData(response.data);
+      } else {
+        alert("Error fetching orders");
+      }
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoader(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
 
   // State management
   const [searchTerm, setSearchTerm] = useState(""); // For search bar
@@ -149,6 +84,62 @@ const Orders = () => {
       {index + 1}
     </button>
   ));
+  const handleDelete = async (itemId) => {
+    try {
+      const response = await axios.delete(
+        `https://villyzstore.onrender.com/deleteOrder/${itemId}`
+      );
+      if (response) {
+        alert.alert("order deleted successfully");
+      }
+    } catch (error) {
+      console.error("Delete error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to delete the item.",
+      });
+    }
+  };
+  const [orderStatus, setOrderStatus] = useState("");
+  useEffect(() => {
+    if (selectedOrder) {
+      setOrderStatus(selectedOrder.orderStatus || "Processing");
+    }
+  }, [selectedOrder]);
+
+  const handleStatusChange = async (event) => {
+    const newStatus = event.target.value;
+    console.log("Selected Status:", newStatus); // Debugging log
+
+    setOrderStatus(newStatus);
+
+    if (!selectedOrder) return;
+
+    try {
+      const response = await fetch(
+        `https://villyzstore.onrender.com/${selectedOrder._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ orderStatus: newStatus }),
+        }
+      );
+
+      const data = await response.json();
+      console.log("Backend Response:", data); // Debugging log
+
+      if (!response.ok) throw new Error("Failed to update order status");
+
+      setSelectedOrder((prev) => ({ ...prev, orderStatus: newStatus }));
+      alert("Order status updated successfully!");
+    } catch (error) {
+      console.error(error);
+      alert("Failed to update status");
+    }
+  };
 
   return (
     <div className="w-100">
@@ -215,8 +206,7 @@ const Orders = () => {
                     <th>Created at</th>
                     <th>Customer</th>
                     <th>Total</th>
-                    <th>Items</th>
-                    <th>Order status</th>
+                    <th>OrderStatus</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -224,18 +214,17 @@ const Orders = () => {
                   {currentProducts.length > 0 ? (
                     currentProducts.map((product) => (
                       <tr key={product.id}>
-                        <td>#557779</td>
-                        <td>{product.category}</td>
+                        <td>{product._id}</td>
+                        <td>{product.date}</td>
                         <td>{product.name}</td>
-                        <td>{product.price}</td>
-                        <td>{product.id}</td>
+                        <td>{product.OrderPrice}</td>
                         <td>
                           <div
                             className={
-                              product.stock === "out of stock" ? "out" : "in"
+                              product.orderStatus === "process" ? "in" : "out"
                             }
                           >
-                            {product.stock}
+                            {product.orderStatus}
                           </div>
                         </td>
                         <td>
@@ -245,11 +234,15 @@ const Orders = () => {
                               type="button"
                               data-bs-toggle="modal"
                               data-bs-target="#staticBackdrop"
+                              onClick={() => setSelectedOrder(product)}
                             >
                               <IoEyeOutline size={20} color="blue" />
                             </div>
 
-                            <div className="DeleteIcn">
+                            <div
+                              className="DeleteIcn"
+                              onClick={() => handleDelete(product._id)}
+                            >
                               <RiDeleteBin6Line size={20} color="red" />
                             </div>
                           </div>
@@ -279,122 +272,155 @@ const Orders = () => {
                 aria-hidden="true"
               >
                 <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                        Order details
-                      </h1>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
-                    </div>
-                    <div class="modal-body">
-                      <div className="d-flex align-items-center justify-content-between mt-3">
-                        <div>Customer name</div>
-                        <div>omojola</div>
+                  {selectedOrder ? (
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                          Order details
+                        </h1>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
                       </div>
-                      <div className="d-flex align-items-center justify-content-between mt-3">
-                        <div>Order ID</div>
-                        <div>#571423</div>
-                      </div>
-                      <div className="d-flex align-items-center justify-content-between mt-3">
-                        <div>Order date</div>
-                        <div>2024-8-10</div>
-                      </div>
-                      <div className="d-flex align-items-center justify-content-between mt-3">
-                        <div>Order price</div>
-                        <div>$571</div>
-                      </div>
-                      <div className="d-flex align-items-center justify-content-between mt-3">
-                        <div>payment method</div>
-                        <div>paypal</div>
-                      </div>
-                      <div className="d-flex align-items-center justify-content-between mt-3">
-                        <div>payment status</div>
-                        <div className="success">paid</div>
-                      </div>
-                      <div className="d-flex align-items-center justify-content-between mt-3">
-                        <div>order status</div>
-                        <div className="paid">Delivered</div>
-                      </div>
-                      <div className="d-flex align-items-center justify-content-between mt-3">
-                        <div>order status edit</div>
-                        <select name="" id="">
-                          <option value="Delivered">Delivered</option>
-                          <option value="Shipped">Shipped</option>
-                          <option value="Shipped">in Shipping</option>
-                          <option value="pending">pending</option>
-                          <option value="canceled">canceled</option>
-                          <option value="canceled">Returned</option>
-                        </select>
-                      </div>
-                    </div>
-                    <hr />
-                    <div className="px-3 pb-3">
-                      <div className="modal-head">order details</div>
-                      <div className="order-details my-3">
-                        <div className="d-flex align-items-center justify-content-between mt-2">
-                          <div className="d-flex align-items-center">
-                            <div>
-                              <img
-                                src="https://static.vecteezy.com/system/resources/previews/047/826/370/non_2x/portable-blender-against-transparent-background-free-png.png"
-                                alt=""
-                                width={40}
-                                height={40}
-                              />
-                            </div>
-                            <div>Blender</div>
+                      <div className="modal-body">
+                        <>
+                          <div className="d-flex align-items-center justify-content-between mt-3">
+                            <div>Customer name</div>
+                            <div>{selectedOrder.name}</div>
                           </div>
-                          <div>2</div>
-                          <div>$20</div>
-                        </div>
-                        <div className="d-flex align-items-center justify-content-between mt-2">
-                          <div className="d-flex align-items-center">
-                            <div>
-                              <img
-                                src="https://static.vecteezy.com/system/resources/previews/047/826/370/non_2x/portable-blender-against-transparent-background-free-png.png"
-                                alt=""
-                                width={40}
-                                height={40}
-                              />
-                            </div>
-                            <div>Blender</div>
+                          <div className="d-flex align-items-center justify-content-between mt-3">
+                            <div>Customer ID</div>
+                            <div>{selectedOrder.UserID}</div>
                           </div>
-                          <div>2</div>
-                          <div>$20</div>
-                        </div>
-                        <div className="d-flex align-items-center justify-content-between mt-2">
-                          <div className="d-flex align-items-center">
-                            <div>
-                              <img
-                                src="https://static.vecteezy.com/system/resources/previews/047/826/370/non_2x/portable-blender-against-transparent-background-free-png.png"
-                                alt=""
-                                width={40}
-                                height={40}
-                              />
-                            </div>
-                            <div>Blender</div>
+
+                          <div className="d-flex align-items-center justify-content-between mt-3">
+                            <div>Order ID</div>
+                            <div>{selectedOrder._id}</div>
                           </div>
-                          <div>2</div>
-                          <div>$20</div>
+                          <div className="d-flex align-items-center justify-content-between mt-3">
+                            <div>Order date</div>
+                            <div>{selectedOrder.date}</div>
+                          </div>
+                          <div className="d-flex align-items-center justify-content-between mt-3">
+                            <div>Payment Reference</div>
+                            <div>{selectedOrder.paymentReference}</div>
+                          </div>
+                          <div className="d-flex align-items-center justify-content-between mt-3">
+                            <div>Order price</div>
+                            <div>${selectedOrder.OrderPrice}</div>
+                          </div>
+                          <div className="d-flex align-items-center justify-content-between mt-3">
+                            <div>Delivery Fee</div>
+                            <div>${selectedOrder.DeliveryFee}</div>
+                          </div>
+                          <div className="d-flex align-items-center justify-content-between mt-3">
+                            <div>Payment method</div>
+                            <div>Card</div>
+                          </div>
+                          <div className="d-flex align-items-center justify-content-between mt-3">
+                            <div>Payment status</div>
+                            <div
+                              className={
+                                selectedOrder.PaymentStatus === "Paid"
+                                  ? "success"
+                                  : "pending"
+                              }
+                            >
+                              {selectedOrder.orderStatus}
+                            </div>
+                          </div>
+                          <select
+                            id="status"
+                            value={orderStatus}
+                            onChange={handleStatusChange}
+                          >
+                            <option value="Processing">Processing</option>
+                            <option value="Shipping">Shipping</option>
+                            <option value="Shipped">Shipped</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="Cancelled">Cancelled</option>
+                          </select>
+                          <div className="d-flex align-items-center justify-content-between mt-3">
+                            <div>Order status</div>
+                            <div className="text-danger">
+                              {selectedOrder.orderStatus}
+                            </div>
+                          </div>
+                        </>
+                      </div>
+
+                      <hr />
+                      <div className="px-3 pb-3">
+                        <div className="modal-head">order details</div>
+                        <div className="order-details my-3">
+                          {selectedOrder.Orders.map((item) => {
+                            return (
+                              <div>
+                                <div className="d-flex align-items-center">
+                                  <div>
+                                    <img
+                                      src={item.image}
+                                      alt=""
+                                      width={40}
+                                      height={40}
+                                    />
+                                  </div>
+                                  <div>
+                                    {expandedProductId === item._id
+                                      ? item.name
+                                      : item.name.length > 15
+                                      ? `${item.name.slice(0, 15)}...`
+                                      : item.name}
+                                    {item.name.length > 15 && (
+                                      <span
+                                        onClick={() =>
+                                          toggleProductName(item._id)
+                                        }
+                                        style={{
+                                          color: "blue",
+                                          cursor: "pointer",
+                                          marginLeft: "5px",
+                                        }}
+                                      >
+                                        {expandedProductId === item._id
+                                          ? "Read less"
+                                          : "Read more"}
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                                <hr />
+                                <div className="mt-2 ms-2">
+                                  Quantity : {item.quantity}
+                                </div>
+                                <hr />
+                                <div className="mt-2 ms-2 mb-1">
+                                  Price:${item.price}
+                                </div>
+                                <hr />
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
+                      <hr />
+                      <div className="modal-head px-3 pb-1 ">
+                        shipping address
+                      </div>
+                      <div className="address px-4 pb-5">
+                        <div>Country : {selectedOrder.country}</div>
+                        <div>Address :{selectedOrder.street}</div>
+                        <div>State : {selectedOrder.state}</div>
+                        <div>Postal Code : {selectedOrder.postalCode}</div>
+                        <div>city : {selectedOrder.city}</div>
+                      </div>
                     </div>
-                    <hr />
-                    <div className="modal-head px-3 pb-1 ">
-                      shipping address
-                    </div>
-                    <div className="address px-4 pb-5">
-                      <div>Country : Nigeria</div>
-                      <div>Address : Lagos</div>
-                      <div>State : Lagos</div>
-                      <div>Postal Code : 123432</div>
-                      <div>city : Benin</div>
-                    </div>
-                  </div>
+                  ) : (
+                    <p>Loading...</p>
+                  )}
                 </div>
               </div>
               {/* Pagination */}
