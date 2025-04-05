@@ -118,7 +118,7 @@ const Orders = () => {
 
     try {
       const response = await fetch(
-        `https://villyzstore.onrender.com/${selectedOrder._id}`,
+        `https://villyzstore.onrender.com/updateOrderStatus/${selectedOrder._id}`,
         {
           method: "PUT",
           headers: {
