@@ -1,200 +1,264 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./ManageFee.css";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { CiEdit } from "react-icons/ci";
+
+const BASE_URL = "http://localhost:5000";
+
 const ManageFee = () => {
   const [locations, setLocations] = useState({});
+  const [selectedLocation, setSelectedLocation] = useState("");
   const [newLocation, setNewLocation] = useState("");
+  const [newLocationPrice, setNewLocationPrice] = useState("");
   const [newState, setNewState] = useState("");
   const [newPrice, setNewPrice] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState("");
+  const [openStates, setOpenStates] = useState({}); // <-- track open state
 
-  // Add a new location
-  const handleAddLocation = () => {
-    if (newLocation.trim() !== "" && !locations[newLocation]) {
-      setLocations((prev) => ({
-        ...prev,
-        [newLocation]: {},
-      }));
-      setNewLocation("");
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/countries`);
+        const locationsData = response.data.reduce((acc, location) => {
+          acc[location.country] = {
+            price: location.price,
+            states: location.states,
+          };
+          return acc;
+        }, {});
+        setLocations(locationsData);
+      } catch (error) {
+        console.error("Error fetching locations:", error);
+      }
+    };
+
+    fetchLocations();
+  }, []);
+
+  const toggleOpenStates = (country) => {
+    setOpenStates((prev) => ({
+      ...prev,
+      [country]: !prev[country],
+    }));
+  };
+
+  const handleAddLocation = async () => {
+    if (newLocation.trim() && newLocationPrice.trim()) {
+      try {
+        const response = await axios.post(`${BASE_URL}/countries`, {
+          country: newLocation,
+          price: parseFloat(newLocationPrice),
+        });
+
+        setLocations((prev) => ({
+          ...prev,
+          [response.data.country]: {
+            price: response.data.price,
+            states: {},
+          },
+        }));
+
+        setNewLocation("");
+        setNewLocationPrice("");
+      } catch (error) {
+        console.error("Error adding country:", error);
+      }
     }
   };
 
-  // Add a state and price under the selected location
-  const handleAddState = () => {
-    if (
-      selectedLocation &&
-      newState.trim() !== "" &&
-      newPrice.trim() !== "" &&
-      !locations[selectedLocation][newState]
-    ) {
+  const handleAddState = async () => {
+    if (selectedLocation && newState.trim() && newPrice.trim()) {
+      try {
+        const response = await axios.put(
+          `${BASE_URL}/countries/${selectedLocation}/states`,
+          {
+            state: newState,
+            price: parseFloat(newPrice),
+          }
+        );
+
+        const updatedStates = response.data.states;
+
+        setLocations((prev) => ({
+          ...prev,
+          [selectedLocation]: {
+            ...prev[selectedLocation],
+            states: updatedStates,
+          },
+        }));
+
+        setNewState("");
+        setNewPrice("");
+      } catch (error) {
+        console.error("Error adding/updating state:", error);
+      }
+    }
+  };
+
+  const handleDeleteLocation = async (country) => {
+    try {
+      await axios.delete(`${BASE_URL}/countries/${country}`);
+      const updatedLocations = { ...locations };
+      delete updatedLocations[country];
+      setLocations(updatedLocations);
+      setOpenStates((prev) => {
+        const newOpen = { ...prev };
+        delete newOpen[country];
+        return newOpen;
+      });
+
+      if (selectedLocation === country) {
+        setSelectedLocation("");
+      }
+    } catch (error) {
+      console.error("Error deleting country:", error);
+    }
+  };
+
+  const handleDeleteState = async (country, state) => {
+    try {
+      const response = await axios.delete(
+        `${BASE_URL}/countries/${country}/states/${state}`
+      );
+
+      const updatedStates = response.data.location.states;
+
       setLocations((prev) => ({
         ...prev,
-        [selectedLocation]: {
-          ...prev[selectedLocation],
-          [newState]: newPrice,
+        [country]: {
+          ...prev[country],
+          states: updatedStates,
         },
       }));
-      setNewState("");
-      setNewPrice("");
+    } catch (error) {
+      console.error("Error deleting state:", error);
     }
   };
 
   return (
-    <div className="delivery">
-      <div className="p-4 delivery-form shadow">
-        <div className="head">Manage Locations, States, and Prices</div>
+    <div className="p-6 max-w-4xl mx-auto">
+      <div className="head">Manage Delivery Fees</div>
 
-        {/* Add Location */}
-        <div className="mb-4">
-          <label className="block mb-2">Add Location:</label>
+      {/* Add Country */}
+      <div className="country-body">
+        <div className="head"> Add New Country</div>
+        <div className="">
           <input
             type="text"
-            className="form-control"
-            placeholder="Enter location name"
+            placeholder="Country"
             value={newLocation}
             onChange={(e) => setNewLocation(e.target.value)}
+            className="form-control"
           />
-          <button
-            className="btn btn-primary mt-2"
-            onClick={handleAddLocation}
-            disabled={!newLocation.trim()}
-          >
-            Add Location
+          <input
+            type="number"
+            placeholder="Country Fee"
+            value={newLocationPrice}
+            onChange={(e) => setNewLocationPrice(e.target.value)}
+            className="form-control mt-3"
+          />
+          <button onClick={handleAddLocation} className="btn btn-primary mt-3">
+            Add Country
           </button>
         </div>
+      </div>
 
-        {/* Add State and Price */}
-        {Object.keys(locations).length > 0 && (
-          <div className="mb-4">
-            <label className="block mb-2">Select Location:</label>
-            <select
-              className="form-select"
-              value={selectedLocation}
-              onChange={(e) => setSelectedLocation(e.target.value)}
-            >
-              <option value="">-- Select Location --</option>
-              {Object.keys(locations).map((loc) => (
-                <option key={loc} value={loc}>
-                  {loc}
-                </option>
-              ))}
-            </select>
+      {/* Country List */}
+      <div className="grid gap-4">
+        {Object.entries(locations).map(([country, data]) => (
+          <div
+            key={country}
+            className={`border rounded-lg p-4 shadow-sm ${
+              selectedLocation === country
+                ? "bg-blue-50 border-blue-400"
+                : "bg-white"
+            }`}
+          >
+            <div className="flex justify-between items-start">
+              <div>
+                <h4 className="country-name">{country}</h4>
+                <p className="country-fee">Fee: ${data.price}</p>
+              </div>
+              <div className="flex gap-2 flex-wrap">
+                <button
+                  onClick={() => setSelectedLocation(country)}
+                  className="btn btn-primary ms-2"
+                >
+                  Select
+                </button>
 
-            <label className="block mb-2">Add State:</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter state name"
-              value={newState}
-              onChange={(e) => setNewState(e.target.value)}
-            />
-
-            <label className="block mb-2">Add Price:</label>
-            <input
-              type="number"
-              className="form-control"
-              placeholder="Enter price"
-              value={newPrice}
-              onChange={(e) => setNewPrice(e.target.value)}
-            />
-
-            <button
-              className="btn btn-primary"
-              onClick={handleAddState}
-              disabled={
-                !selectedLocation || !newState.trim() || !newPrice.trim()
-              }
-            >
-              Add State and Price
-            </button>
-            <br />
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-              onClick={handleAddState}
-            >
-              Show all location
-            </button>
-
-            <div
-              class="modal fade"
-              id="exampleModal"
-              tabindex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                      Location Data
-                    </h1>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    {Object.keys(locations).length > 0 && (
-                      <div>
-                        <ul>
-                          {Object.keys(locations).map((location) => (
-                            <li key={location} className="mb-4">
-                              <div className="d-flex align-items-center justify-content-between">
-                                <div>{location}</div>
-                                <div className="d-flex gap-2">
-                                  <div>
-                                    <RiDeleteBin6Line color="red" size={15} />
-                                  </div>
-                                  <div>
-                                    <CiEdit color="blue" size={15} />{" "}
-                                  </div>
-                                </div>
-                              </div>
-                              <ul className="ml-4">
-                                {Object.keys(locations[location]).map(
-                                  (state) => (
-                                    <li key={state}>
-                                      {state}: ${locations[location][state]}
-                                      <RiDeleteBin6Line
-                                        color="red"
-                                        className="mx-1"
-                                      />
-                                    </li>
-                                  )
-                                )}
-                              </ul>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <button type="button" class="btn btn-warning">
-                      Save changes
-                    </button>
-                  </div>
-                </div>
+                <button
+                  onClick={() => handleDeleteLocation(country)}
+                  className="btn btn-danger ms-2"
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={() => toggleOpenStates(country)}
+                  className="btn btn-secondary ms-2"
+                >
+                  {openStates[country] ? "Collapse States" : "Show States"}
+                </button>
               </div>
             </div>
-          </div>
-        )}
 
-        {/* Display Locations, States, and Prices */}
+            {/* Collapsible State List */}
+            {openStates[country] && (
+              <div className="mt-3">
+                <h5 className="head2">States:</h5>
+                {data.states && Object.entries(data.states).length > 0 ? (
+                  <ul className="space-y-1 pl-4 text-sm text-gray-700">
+                    {Object.entries(data.states).map(([state, price]) => (
+                      <li key={state} className="list">
+                        <span>
+                          {state}: ${price}
+                        </span>
+                        <button
+                          onClick={() => handleDeleteState(country, state)}
+                          className="btn btn-danger ms-2"
+                        >
+                          Delete
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-gray-500 pl-4">
+                    No states added yet.
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
+
+      {/* Add/Edit State Form */}
+      {selectedLocation && (
+        <div className="bg-white shadow-md rounded-lg p-4 mt-6">
+          <h4 className="head">
+            ✍ Add/Edit State for:{" "}
+            <span className="text-blue-600">{selectedLocation}</span>
+          </h4>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <input
+              type="text"
+              placeholder="State"
+              value={newState}
+              onChange={(e) => setNewState(e.target.value)}
+              className="form-control"
+            />
+            <input
+              type="number"
+              placeholder="State Fee"
+              value={newPrice}
+              onChange={(e) => setNewPrice(e.target.value)}
+              className="form-control mt-3"
+            />
+            <button onClick={handleAddState} className="btn btn-success mt-3">
+              Add/Edit State
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

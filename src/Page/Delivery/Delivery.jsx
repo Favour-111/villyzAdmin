@@ -226,8 +226,9 @@ const Delivery = () => {
                 <thead>
                   <tr className="tableHead">
                     <th>Location ID</th>
-                    <th>Delivery location</th>
-                    <th>Price</th>
+                    <th> Country</th>
+                    <th> State</th>
+                    <th>Total Price</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -237,7 +238,7 @@ const Delivery = () => {
                       <tr key={product.id}>
                         <td>#571423</td>
                         <td>{product.name}</td>
-                        <td>{product.category}</td>
+                        <td>{product.name}</td>
                         <td>{product.price}</td>
 
                         <td>
