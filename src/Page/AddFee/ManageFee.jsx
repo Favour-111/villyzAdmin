@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./ManageFee.css";
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://villyzstore.onrender.com";
 
 const ManageFee = () => {
   const [locations, setLocations] = useState({});

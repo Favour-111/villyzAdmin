@@ -236,11 +236,11 @@ const SideBar = () => {
               {/* Delivery */}
               <li
                 className={
-                  activeLink === "delivery" ? "Link-active" : "link-inactive"
+                  activeLink === "fee" ? "Link-active" : "link-inactive"
                 }
                 onClick={() => {
-                  handleLinkClick("delivery");
-                  navigate("/delivery");
+                  handleLinkClick("fee");
+                  navigate("/fee");
                   window.scrollTo(0, 0);
                 }}
               >
