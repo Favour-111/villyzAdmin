@@ -2,3 +2,7 @@
   padding: 0;
   margin: 0;
 }
+.Page-Container {
+  background-color: rgba(83, 109, 254, 0.03);
+  padding: 20px;
+}

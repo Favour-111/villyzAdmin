@@ -2,17 +2,20 @@ import React, { useState, useRef, useEffect } from "react";
 import "./SideBar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { GoHome } from "react-icons/go";
-import { AiOutlineProduct } from "react-icons/ai";
+import { AiOutlineAppstoreAdd, AiOutlineProduct } from "react-icons/ai";
 import { LiaOpencart } from "react-icons/lia";
 import { FaBlogger, FaUser } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 import { CiLogout } from "react-icons/ci";
 import { MdOutlineDeliveryDining } from "react-icons/md";
+import { HiOutlineBellAlert } from "react-icons/hi2";
 import {
   RiArrowDropDownLine,
   RiMenuFold2Line,
   RiMenuUnfold2Line,
 } from "react-icons/ri";
+import { FiMenu, FiX } from "react-icons/fi";
+import { IoSunnyOutline } from "react-icons/io5";
 
 const SideBar = () => {
   const navigate = useNavigate();
@@ -62,13 +65,12 @@ const SideBar = () => {
   return (
     <div>
       {/* Top Bar */}
-      <div className="topBar shadow-sm">
+      <div className="topBar">
         <div className="d-flex align-items-center justify-content-between welcome-cont">
-          <div className="welcome-txt d-flex align-items-center gap-3">
+          <div className="">
             <div onClick={() => setNavOpen(true)}>
-              <RiMenuFold2Line size={25} />
+              <FiMenu size={20} />
             </div>
-            <div>Welcome!!</div>
           </div>
           <div className="d-flex align-items-center gap-3">
             <div>
@@ -80,17 +82,24 @@ const SideBar = () => {
               />
             </div>
             <div>
+              <IoSunnyOutline size={20} />
+            </div>
+            <div>
+              <AiOutlineAppstoreAdd size={20} />
+            </div>
+            <div className="NotificationBell">
+              <HiOutlineBellAlert size={20} />
+              <div className="ActiveNotification"></div>
+            </div>
+            <div className="Profile-Image">
               <img
-                src="https://nextjs.spruko.com/ynex-ts/preview/assets/images/faces/10.jpg"
+                src="https://www.transparentpng.com/thumb/man/vkarWM-download-man-png-image-png-image-freepngimg.png"
                 width={25}
                 height={25}
                 alt="admin"
-                style={{
-                  borderRadius: "100%",
-                }}
               />
+              <div className="Active"></div>
             </div>
-            <div className="admin-Text">Admin</div>
           </div>
         </div>
       </div>
@@ -108,7 +117,7 @@ const SideBar = () => {
               Vill<span>yz</span>
             </div>
             <div onClick={() => setNavOpen(false)}>
-              <RiMenuUnfold2Line />
+              <FiX size={20} />
             </div>
           </div>
           <div className="nav-content">

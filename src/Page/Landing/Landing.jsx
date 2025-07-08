@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "../../Component/SideBar/SideBar";
 import "./Landing.css";
-import { Line } from "react-chartjs-2";
-import { FiUsers } from "react-icons/fi";
+import { FiShoppingCart, FiUsers } from "react-icons/fi";
+import { TfiPieChart } from "react-icons/tfi";
+import { LuUsers } from "react-icons/lu";
+import { TbCurrencyDollar } from "react-icons/tb";
 import {
   Chart as ChartJS,
   LineElement,
   PointElement,
-  LinearScale,
   CategoryScale,
-  Filler,
+  LinearScale,
+  LineController,
   Tooltip,
+  Legend,
+  Filler,
+  ArcElement,
 } from "chart.js";
+import { Line, Doughnut } from "react-chartjs-2";
 import { MdAttachMoney } from "react-icons/md";
 import { FaPaperclip } from "react-icons/fa6";
 import Graph from "../../Component/Graph/Graph";
@@ -19,15 +25,19 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../../Component/footer/Footer";
 import axios from "axios";
 import Swal from "sweetalert2";
+import img from "../../assets/images/alluring-distinguished-casual-man-in-a-t-shirt-and-jeans-with-transparent-background-free-png.webp";
 
 // Register necessary chart components
 ChartJS.register(
   LineElement,
   PointElement,
-  LinearScale,
   CategoryScale,
+  LinearScale,
+  LineController,
+  Tooltip,
+  Legend,
   Filler,
-  Tooltip
+  ArcElement
 );
 const Landing = () => {
   const [product, setProduct] = useState([]);
@@ -73,23 +83,71 @@ const Landing = () => {
   useEffect(() => {
     fetchProduct();
   }, []);
+  const percentage = 78;
 
-  const data = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  const dataCircle = {
     datasets: [
       {
-        label: "Sales",
+        data: [percentage, 100 - percentage],
+        backgroundColor: ["#007bff", "#e0e0e0"],
+        borderWidth: 0,
+      },
+    ],
+  };
+
+  const options2 = {
+    rotation: -90, // start at the bottom
+    circumference: 180, // half circle
+    cutout: "70%", // inner radius (like thickness)
+    plugins: {
+      tooltip: { enabled: false },
+      legend: { display: false },
+    },
+  };
+  const data = {
+    labels: ["", "", "", "", "", ""],
+    datasets: [
+      {
         data: [10, 20, 15, 30, 25, 35],
-        fill: true, // Enable the background fill
-        backgroundColor: "rgba(75, 192, 192, 0.2)", // Background below the line
-        borderColor: "rgba(75, 192, 192, 1)", // Line color
+        fill: true,
+        backgroundColor: "rgba(75, 192, 192, 0)",
+        borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 2,
-        tension: 0.4, // Smooth curves
-        pointRadius: 3, // Small dots on data points
+
+        tension: 0,
+        pointRadius: 2,
         pointBackgroundColor: "rgba(75, 192, 192, 1)",
       },
     ],
   };
+
+  const optionsForChart = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false, // Hides the legend
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          display: true,
+          drawTicks: false,
+          drawOnChartArea: true,
+          color: "rgba(0, 0, 0, 0.1)",
+          borderDash: [4, 4], // dotted vertical lines
+        },
+      },
+      y: {
+        display: false, // Hides y-axis line, ticks, labels
+        grid: {
+          display: false, // Hides grid lines
+        },
+      },
+    },
+  };
+
   const data2 = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     datasets: [
@@ -201,6 +259,124 @@ const Landing = () => {
 
   return (
     <div>
+      <div className="congratulation-Container">
+        <div>
+          <div className="CongratulationText">Congratulation Villyz! 🎉</div>
+          <div className="bestSeller">Best Seller of the month</div>
+          <div className="SalesPrice">$48.6k</div>
+          <button>View Sales</button>
+        </div>
+        <div>
+          <img src={img} alt="image" />
+        </div>
+      </div>
+      <div className="statistics">
+        <div className="StatisticsHead">Statistics</div>
+        <div className="Stat-container">
+          <div className="Stats-Item">
+            <div className="icons">
+              <TfiPieChart size={20} />
+            </div>
+            <div>
+              <div className="Stats-Amount">230k</div>
+              <div className="Stat-name">Sales</div>
+            </div>
+          </div>
+          <div className="Stats-Item">
+            <div className="icons2">
+              <LuUsers size={20} />
+            </div>
+            <div>
+              <div className="Stats-Amount">5.94k</div>
+              <div className="Stat-name">Customers</div>
+            </div>
+          </div>
+          <div className="Stats-Item">
+            <div className="icons3">
+              <FiShoppingCart size={20} />
+            </div>
+            <div>
+              <div className="Stats-Amount">1.432k</div>
+              <div className="Stat-name">Products</div>
+            </div>
+          </div>
+          <div className="Stats-Item">
+            <div className="icons4">
+              <TbCurrencyDollar size={24} />
+            </div>
+            <div>
+              <div className="Stats-Amount">
+                <TbCurrencyDollar />
+                11432
+              </div>
+              <div className="Stat-name">Revenue</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="Section-Container">
+        <div className="Profit-Container">
+          <div>
+            <div className="profit-head">Profit</div>
+            <div className="profit-SecondContent">Last-Month</div>
+          </div>
+          <div>
+            <div>
+              <div
+                style={{ width: "100%", height: "120px", position: "relative" }}
+              >
+                <Line
+                  data={data}
+                  options={optionsForChart}
+                  style={{ width: "100%" }}
+                />
+              </div>
+            </div>
+
+            <div className="d-flex align-items-center justify-content-between mt-">
+              <div className="Profit-Price">624k</div>
+              <div className="Profit-Percentage">+8.24%</div>
+            </div>
+          </div>
+        </div>
+        <div className="Expenses-Container">
+          <div>
+            <div className="Expenses-head">Profit</div>
+            <div className="Expenses-SecondContent">Last-Month</div>
+          </div>
+          <div className="Circle-Cont">
+            <div
+              style={{
+                position: "relative",
+                width: 100,
+                height: 100,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
+            >
+              <Doughnut data={dataCircle} options={options2} />
+              <div
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -30%)",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                  fontFamily: "PoppinsMedium",
+                }}
+              >
+                {percentage}%
+              </div>
+              <div className="Expenses-small-text">
+                $27k Expenses more than last month
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="body-container">
         <div className="container-fluid recent">
           <div className="row">
@@ -239,7 +415,7 @@ const Landing = () => {
                 </div>
                 <div className="">
                   <div style={{ width: "100%", height: "70px" }}>
-                    <Line data={data} options={options} />
+                    <Line data={data} options={optionsForChart} />
                   </div>
                 </div>
               </div>

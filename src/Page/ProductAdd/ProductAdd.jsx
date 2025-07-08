@@ -51,6 +51,8 @@ const ProductAdd = () => {
   };
 
   const saveDocument = async (e) => {
+    e.preventDefault();
+
     const formData = new FormData();
     formData.append("productName", form.productName);
     formData.append("newPrice", form.newPrice);
@@ -65,7 +67,6 @@ const ProductAdd = () => {
       formData.append("image", form.image);
     }
     formData.append("deals", form.deals);
-    e.preventDefault();
 
     if (
       form.productName === "" ||
@@ -108,14 +109,14 @@ const ProductAdd = () => {
             newPrice: "",
             Rating: "",
             oldPrice: "",
-            categories: "none",
-            availability: "none",
-            productDescription: "",
+            categories: "",
+            availability: "",
+            productDescription: "", // ✅ this will now work with controlled ReactQuill
             image: null,
-            deals: "none",
+            deals: false, // changed "none" to actual boolean value
           });
           setSelectedImage(null);
-          setImageUrl("");
+          setImageUrl(""); // ✅ reset image URL input too
         } else {
           const Toast = Swal.mixin({
             toast: true,
@@ -407,10 +408,9 @@ const ProductAdd = () => {
                 <p>or</p>
                 <input
                   type="text"
-                  placeholder="Enter image URL"
+                  placeholder="Paste image URL"
                   value={imageUrl}
                   onChange={handleImageUrlChange}
-                  disabled={form.image !== null} // Disable if file is selected
                 />
               </div>
             </div>

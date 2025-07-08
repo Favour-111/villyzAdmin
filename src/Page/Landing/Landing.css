@@ -29,9 +29,190 @@
   src: url(../../assets/font/Poppins-Medium.ttf);
 }
 .body-container {
-  background-color: var(--primary-color-lighter);
   width: 100%;
   height: 100%;
+}
+.congratulation-Container {
+  height: 165px;
+  width: 100%;
+  box-shadow: -1px 0px 11px -4px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 20px;
+  display: flex;
+  background-color: white;
+  justify-content: space-between;
+  overflow: hidden;
+  button {
+    margin-top: 8px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 12px;
+    padding: 7px 20px;
+    border: none;
+    border-radius: 5px;
+    font-family: PoppinsMedium;
+    box-shadow: -1px 0px 11px -4px rgba(83, 109, 254, 0.5);
+  }
+  img {
+    width: 320px;
+  }
+}
+.CongratulationText {
+  font-family: PoppinsMedium;
+  font-size: 16px;
+}
+
+.bestSeller {
+  font-size: 12px;
+  color: #0000008b;
+  font-family: poppinsMedium;
+  margin-top: 3px;
+}
+.SalesPrice {
+  font-size: 20px;
+  color: var(--primary-color);
+  font-family: PoppinsMedium;
+  margin-top: 10px;
+}
+.statistics {
+  width: 100%;
+  box-shadow: -1px 0px 11px -4px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: white;
+}
+.Stat-container {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.Stats-Item {
+  display: flex;
+  width: 25%;
+  align-items: center;
+  gap: 15px;
+}
+.icons {
+  color: var(--primary-color);
+  background-color: rgba(83, 109, 254, 0.114);
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+.icons2 {
+  color: #00809d;
+  background-color: #00809d1e;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+.icons3 {
+  color: #ff3f33;
+  background-color: #ff41331a;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+.icons4 {
+  color: #03a791;
+  background-color: #03a7911b;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+.StatisticsHead {
+  font-family: PoppinsMedium;
+  font-size: 14px;
+}
+.Stats-Amount {
+  font-family: PoppinsMedium;
+  font-size: 16px;
+}
+.Stat-name {
+  font-family: PoppinsMedium;
+  font-size: 11px;
+  color: #0000008b;
+}
+.Section-Container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.Profit-Container {
+  height: 230px;
+  width: 49%;
+  box-shadow: -1px 0px 11px -4px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: white;
+  overflow: hidden;
+  .profit-head {
+    font-size: 16px;
+    font-family: PoppinsMedium;
+  }
+  .profit-SecondContent {
+    font-size: 12px;
+    color: #0000008b;
+    font-family: PoppinsMedium;
+  }
+
+  .Profit-Price {
+    font-size: 19px;
+    font-family: PoppinsMedium;
+  }
+  .Profit-Percentage {
+    font-size: 11px;
+    font-family: PoppinsMedium;
+    color: #03a791;
+  }
+}
+.Expenses-Container {
+  height: 230px;
+  width: 49%;
+  box-shadow: -1px 0px 11px -4px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: white;
+  overflow: hidden;
+  .Expenses-head {
+    font-size: 16px;
+    font-family: PoppinsMedium;
+  }
+  .Expenses-SecondContent {
+    font-size: 12px;
+    color: #0000008b;
+    font-family: PoppinsMedium;
+  }
+  .Circle-Cont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .Expenses-small-text {
+    font-size: 11px;
+    font-family: PoppinsMedium;
+    color: #0000008b;
+    width: 300px;
+    text-align: center;
+  }
 }
 .info-container {
   background-color: white;
@@ -103,6 +284,27 @@
   font-size: 20px;
 }
 
+@media screen and (max-width: 620px) {
+  .CongratulationText {
+    font-size: 11px;
+    width: 150px;
+  }
+  .congratulation-Container {
+    img {
+      width: 250px !important;
+    }
+  }
+  .Section-Container {
+    display: flex;
+    flex-direction: column;
+  }
+  .Profit-Container {
+    width: 100%;
+  }
+  .Expenses-Container {
+    width: 100%;
+  }
+}
 @media screen and (max-width: 768px) {
   .recent-order-graph {
     padding: 10px;
@@ -110,6 +312,16 @@
   .table2 {
     width: 500px;
     margin: 0;
+  }
+  .Stat-container {
+    margin-top: 0;
+  }
+  .Stats-Item {
+    display: flex;
+    width: 50%;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
   }
 }
 @media screen and (max-width: 468px) {

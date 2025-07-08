@@ -21,8 +21,7 @@ function App() {
   const location = useLocation(); // Get the current route location
 
   return (
-    <div>
-      {/* Conditionally render the Sidebar based on the route */}
+    <div className="Page-Container">
       {location.pathname !== "/" && <SideBar />}
       <Routes>
         <Route element={<Login />} path="/" />
