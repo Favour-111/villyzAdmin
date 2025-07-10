@@ -214,6 +214,116 @@
     text-align: center;
   }
 }
+.Earning-Reports {
+  height: 480px;
+  width: 49%;
+  box-shadow: -1px 0px 11px -4px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: white;
+  overflow: hidden;
+  .Earning-Reports-head {
+    font-size: 16px;
+    font-family: PoppinsMedium;
+  }
+  .Earning-Reports-SecondContent {
+    font-size: 12px;
+    color: #0000008b;
+    font-family: PoppinsMedium;
+  }
+  .bar {
+    border-radius: 100%;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 250ms;
+  }
+  .bar:hover {
+    background-color: #0000000b;
+  }
+  .Earning-Icons1 {
+    background-color: rgba(128, 0, 128, 0.107);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+  }
+  .Earning-Icons2 {
+    background-color: rgb(220 246 232);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+  }
+  .Earning-Icons3 {
+    background-color: rgb(234 235 237);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+  }
+  .Profit {
+    font-family: PoppinsMedium;
+    font-size: 14px;
+  }
+  .Profit-price {
+    font-family: PoppinsMedium;
+    font-size: 12px;
+    color: #787878;
+  }
+  .Earning-Price {
+    font-size: 13px;
+    font-family: poppinsMedium;
+    color: #787878;
+  }
+  .Earning-Percentage {
+    font-size: 13px;
+    font-family: poppinsMedium;
+    color: #c6c6c6;
+  }
+}
+.Popular-Product {
+  height: 480px;
+  width: 49%;
+  box-shadow: -1px 0px 11px -4px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: white;
+  overflow: hidden;
+  .Popular-Product-head {
+    font-size: 16px;
+    font-family: PoppinsMedium;
+  }
+  .Popular-Product-SecondContent {
+    font-size: 12px;
+    color: #0000008b;
+    font-family: PoppinsMedium;
+  }
+  .Product-Name {
+    font-size: 13px;
+    font-family: PoppinsMedium;
+  }
+  .product-ID {
+    font-size: 13px;
+    font-family: PoppinsMedium;
+    color: #787878;
+  }
+  .Product-price {
+    font-size: 14px;
+    font-family: PoppinsMedium;
+    color: #787878;
+  }
+}
 .info-container {
   background-color: white;
   height: 170px;
@@ -302,6 +412,12 @@
     width: 100%;
   }
   .Expenses-Container {
+    width: 100%;
+  }
+  .Earning-Reports {
+    width: 100%;
+  }
+  .Popular-Product {
     width: 100%;
   }
 }
