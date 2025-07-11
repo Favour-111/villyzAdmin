@@ -393,11 +393,208 @@
   font-family: poppinsSemiBold;
   font-size: 20px;
 }
+.loading-text {
+  font-family: poppinsMedium;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 30px;
+}
+.loadingText {
+  font-family: poppinsMedium;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 30px;
+}
+.table-container {
+  overflow-x: scroll;
+  scrollbar-width: none;
+}
+.Orders-container {
+  height: 580px;
+  width: 100%;
+  box-shadow: -1px 0px 11px -4px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 7px 0;
+  background-color: white;
+  margin-bottom: 50px;
+  .order-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  .Show-btn {
+    font-family: poppinsMedium;
+    font-size: 13px;
+  }
+  .order-button {
+    color: white;
+    font-family: poppinsMedium;
+    background-color: var(--primary-color);
+    padding: 7px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+    box-shadow: -1px 0px 11px -4px var(--primary-color);
+  }
+  select {
+    font-family: poppinsMedium;
+    color: #787878;
+    font-size: 12px;
+  }
+  .order-form {
+    width: 200px;
+  }
+  input {
+    font-family: poppinsMedium;
+    font-size: 12px;
+  }
+  ::placeholder {
+    font-size: 12px;
+  }
+}
+table {
+  border-collapse: collapse;
+}
+thead tr th {
+  border-top: 1px solid #d3d3d3 !important;
+  border-bottom: 1px solid #d3d3d3 !important;
+  padding: 14px 20px;
 
+  font-family: poppinsMedium;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+tbody tr td {
+  background-color: rgb(255, 255, 255) !important;
+  border-bottom: 1px solid #d3d3d3;
+  padding: 14px 20px;
+  font-family: poppinsMedium;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+.table-Status {
+  color: #28c76f;
+  background-color: #28c76f1a;
+  height: 20px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  width: 70px;
+}
+.table-Status-pending {
+  color: #ff9f43;
+  background-color: #ff9e4324;
+  height: 20px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  width: 80px;
+}
+.table-Status-Cancelled {
+  color: red;
+  background-color: rgba(255, 0, 0, 0.11);
+  height: 20px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  width: 70px;
+}
+
+.icon-Eye {
+  font-size: 18px;
+  color: #787878;
+}
+.eye-container {
+  background-color: #00000000;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  border-radius: 100px;
+  transition: 250ms;
+  cursor: pointer;
+}
+.eye-container:hover {
+  background-color: #0000000b;
+}
+.icon-Trash {
+  font-size: 18px;
+  color: #787878;
+}
+.icon-Trash-container {
+  background-color: #00000000;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  border-radius: 100px;
+  transition: 250ms;
+  cursor: pointer;
+}
+.icon-Trash-container:hover {
+  background-color: #0000000b;
+}
+.icon-DOts {
+  font-size: 18px;
+  color: #787878;
+}
+.icon-DOts-container {
+  background-color: #00000000;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  border-radius: 100px;
+  transition: 250ms;
+  cursor: pointer;
+}
+.icon-DOts-container:hover {
+  background-color: #0000000b;
+}
+.OrderCode {
+  color: var(--primary-color);
+}
+.table-text {
+  color: #787878;
+}
+.table-Date {
+  width: 100px;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+th,
+td {
+  padding: 10px;
+  white-space: nowrap;
+}
+input[type="checkbox"] {
+  background-color: var(--primary-color);
+  height: 15px;
+  width: 15px;
+  border-radius: 10px;
+}
 @media screen and (max-width: 620px) {
   .CongratulationText {
     font-size: 11px;
     width: 150px;
+  }
+  .Orders-container {
+    margin-bottom: 100px;
+    height: 600px;
   }
   .congratulation-Container {
     img {
@@ -449,5 +646,14 @@
   }
   table tr td img {
     width: 30px;
+  }
+}
+@media screen and (max-width: 680px) {
+  .order-head {
+    display: flex;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    gap: 10px;
   }
 }

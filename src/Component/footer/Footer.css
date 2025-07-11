@@ -1,6 +1,11 @@
 .footer-body {
   width: 100%;
   padding: 20px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000000;
   text-align: center;
   font-family: poppinsLight;
   font-size: 13px;
