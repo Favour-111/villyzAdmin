@@ -7,27 +7,27 @@
 
 @font-face {
   font-family: poppinsBold;
-  src: url(../../assets/font/IBMPlexSans-Bold.ttf);
+  src: url(../../assets/fonts/PublicSans-Bold.otf);
 }
 
 @font-face {
-  font-family: poppinsLight;
-  src: url(../../assets/font/IBMPlexSans-Light.ttf);
+  font-family: publicLight;
+  src: url(../../assets/fonts/PublicSans-Light.otf);
 }
 
 @font-face {
-  font-family: poppinsSemiBold;
-  src: url(../../assets/font/Poppins-SemiBold.ttf);
+  font-family: publicSemiBold;
+  src: url(../../assets/fonts/PublicSans-SemiBold.otf);
 }
 
 @font-face {
-  font-family: poppinsRegular;
-  src: url(../../assets/font/Poppins-Medium.ttf);
+  font-family: publicRegular;
+  src: url(../../assets/fonts/PublicSans-Regular.otf);
 }
 
 @font-face {
-  font-family: poppinsMedium;
-  src: url(../../assets/font/Poppins-Medium.ttf);
+  font-family: publicThin;
+  src: url(../../assets/fonts/PublicSans-Thin.otf);
 }
 
 /* Ensure the html and body are filling the viewport */
@@ -40,12 +40,6 @@ body {
 }
 
 .product {
-  background-color: var(--primary-color-lighter);
-  min-height: 100vh; /* Ensure it covers the full height of the viewport */
-  width: 100%; /* Ensure it spans the full width */
-  display: flex; /* Allows proper alignment if needed */
-  flex-direction: column;
-  overflow: hidden; /* Prevent unwanted scrollbars */
 }
 
 /* Ensure consistent scrolling */
@@ -153,7 +147,7 @@ table tbody tr {
 .padination-active {
   background-color: var(--primary-color);
   color: white;
-  font-family: poppinsRegular;
+  font-family: publicRegular;
   border-radius: 50px;
   height: 35px;
   width: 35px;
@@ -164,7 +158,7 @@ table tbody tr {
   background-color: #f3f3f3;
 
   color: #4b5966;
-  font-family: poppinsRegular;
+  font-family: publicRegular;
   border-radius: 50px;
   height: 40px;
   font-size: 14px;

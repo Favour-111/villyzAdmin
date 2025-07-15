@@ -4,30 +4,31 @@
   --primary-color-lighter: #e2e8f0;
   --text: #4b5966;
 }
-
 @font-face {
   font-family: poppinsBold;
-  src: url(../../assets/font/IBMPlexSans-Bold.ttf);
+  src: url(../../assets/fonts/PublicSans-Bold.otf);
 }
 
 @font-face {
-  font-family: poppinsLight;
-  src: url(../../assets/font/IBMPlexSans-Light.ttf);
+  font-family: publicLight;
+  src: url(../../assets/fonts/PublicSans-Light.otf);
 }
 
 @font-face {
-  font-family: poppinsSemiBold;
-  src: url(../../assets/font/Poppins-SemiBold.ttf);
+  font-family: publicSemiBold;
+  src: url(../../assets/fonts/PublicSans-SemiBold.otf);
 }
 
 @font-face {
-  font-family: poppinsRegular;
-  src: url(../../assets/font/Poppins-Medium.ttf);
+  font-family: publicRegular;
+  src: url(../../assets/fonts/PublicSans-Regular.otf);
 }
+
 @font-face {
-  font-family: poppinsMedium;
-  src: url(../../assets/font/Poppins-Medium.ttf);
+  font-family: publicThin;
+  src: url(../../assets/fonts/PublicSans-Thin.otf);
 }
+
 .body-container {
   width: 100%;
   height: 100%;
@@ -51,7 +52,7 @@
     padding: 7px 20px;
     border: none;
     border-radius: 5px;
-    font-family: PoppinsMedium;
+    font-family: publicRegular;
     box-shadow: -1px 0px 11px -4px rgba(83, 109, 254, 0.5);
   }
   img {
@@ -59,20 +60,20 @@
   }
 }
 .CongratulationText {
-  font-family: PoppinsMedium;
+  font-family: publicRegular;
   font-size: 16px;
 }
 
 .bestSeller {
   font-size: 12px;
   color: #0000008b;
-  font-family: poppinsMedium;
+  font-family: publicRegular;
   margin-top: 3px;
 }
 .SalesPrice {
   font-size: 20px;
   color: var(--primary-color);
-  font-family: PoppinsMedium;
+  font-family: publicRegular;
   margin-top: 10px;
 }
 .statistics {
@@ -105,6 +106,9 @@
   justify-content: center;
   border-radius: 10px;
 }
+.padination-active {
+  font-family: publicLight;
+}
 .icons2 {
   color: #00809d;
   background-color: #00809d1e;
@@ -136,15 +140,15 @@
   border-radius: 10px;
 }
 .StatisticsHead {
-  font-family: PoppinsMedium;
+  font-family: publicRegular;
   font-size: 14px;
 }
 .Stats-Amount {
-  font-family: PoppinsMedium;
+  font-family: publicRegular;
   font-size: 16px;
 }
 .Stat-name {
-  font-family: PoppinsMedium;
+  font-family: publicRegular;
   font-size: 11px;
   color: #0000008b;
 }
@@ -164,21 +168,21 @@
   overflow: hidden;
   .profit-head {
     font-size: 16px;
-    font-family: PoppinsMedium;
+    font-family: publicRegular;
   }
   .profit-SecondContent {
     font-size: 12px;
     color: #0000008b;
-    font-family: PoppinsMedium;
+    font-family: publicRegular;
   }
 
   .Profit-Price {
     font-size: 19px;
-    font-family: PoppinsMedium;
+    font-family: publicRegular;
   }
   .Profit-Percentage {
     font-size: 11px;
-    font-family: PoppinsMedium;
+    font-family: publicRegular;
     color: #03a791;
   }
 }
@@ -193,12 +197,12 @@
   overflow: hidden;
   .Expenses-head {
     font-size: 16px;
-    font-family: PoppinsMedium;
+    font-family: publicRegular;
   }
   .Expenses-SecondContent {
     font-size: 12px;
     color: #0000008b;
-    font-family: PoppinsMedium;
+    font-family: publicRegular;
   }
   .Circle-Cont {
     display: flex;
@@ -208,7 +212,7 @@
   }
   .Expenses-small-text {
     font-size: 11px;
-    font-family: PoppinsMedium;
+    font-family: publicRegular;
     color: #0000008b;
     width: 300px;
     text-align: center;
@@ -225,12 +229,12 @@
   overflow: hidden;
   .Earning-Reports-head {
     font-size: 16px;
-    font-family: PoppinsMedium;
+    font-family: publicRegular;
   }
   .Earning-Reports-SecondContent {
     font-size: 12px;
     color: #0000008b;
-    font-family: PoppinsMedium;
+    font-family: publicRegular;
   }
   .bar {
     border-radius: 100%;
@@ -272,22 +276,22 @@
     border-radius: 10px;
   }
   .Profit {
-    font-family: PoppinsMedium;
+    font-family: publicRegular;
     font-size: 14px;
   }
   .Profit-price {
-    font-family: PoppinsMedium;
+    font-family: publicRegular;
     font-size: 12px;
     color: #787878;
   }
   .Earning-Price {
     font-size: 13px;
-    font-family: poppinsMedium;
+    font-family: publicRegular;
     color: #787878;
   }
   .Earning-Percentage {
     font-size: 13px;
-    font-family: poppinsMedium;
+    font-family: publicRegular;
     color: #c6c6c6;
   }
 }
@@ -302,25 +306,25 @@
   overflow: hidden;
   .Popular-Product-head {
     font-size: 16px;
-    font-family: PoppinsMedium;
+    font-family: publicRegular;
   }
   .Popular-Product-SecondContent {
     font-size: 12px;
     color: #0000008b;
-    font-family: PoppinsMedium;
+    font-family: publicRegular;
   }
   .Product-Name {
     font-size: 13px;
-    font-family: PoppinsMedium;
+    font-family: publicRegular;
   }
   .product-ID {
     font-size: 13px;
-    font-family: PoppinsMedium;
+    font-family: publicRegular;
     color: #787878;
   }
   .Product-price {
     font-size: 14px;
-    font-family: PoppinsMedium;
+    font-family: publicRegular;
     color: #787878;
   }
 }
@@ -355,7 +359,7 @@
   }
 }
 .total {
-  font-family: poppinsMedium;
+  font-family: publicRegular;
   font-size: 14px;
   color: #4b5966;
 }
@@ -366,7 +370,7 @@
 .chart {
   font-size: 13px;
   color: #4b5966;
-  font-family: poppinsRegular;
+  font-family: publicRegular;
 }
 .recent-order-graph {
   background-color: white;
@@ -394,13 +398,13 @@
   font-size: 20px;
 }
 .loading-text {
-  font-family: poppinsMedium;
+  font-family: publicRegular;
   font-size: 12px;
   text-align: center;
   margin-top: 30px;
 }
 .loadingText {
-  font-family: poppinsMedium;
+  font-family: publicRegular;
   font-size: 12px;
   text-align: center;
   margin-top: 30px;
@@ -425,12 +429,12 @@
     padding: 20px;
   }
   .Show-btn {
-    font-family: poppinsMedium;
+    font-family: publicRegular;
     font-size: 13px;
   }
   .order-button {
     color: white;
-    font-family: poppinsMedium;
+    font-family: publicRegular;
     background-color: var(--primary-color);
     padding: 7px 20px;
     border: none;
@@ -439,7 +443,7 @@
     box-shadow: -1px 0px 11px -4px var(--primary-color);
   }
   select {
-    font-family: poppinsMedium;
+    font-family: publicRegular;
     color: #787878;
     font-size: 12px;
   }
@@ -447,7 +451,7 @@
     width: 200px;
   }
   input {
-    font-family: poppinsMedium;
+    font-family: publicRegular;
     font-size: 12px;
   }
   ::placeholder {
@@ -462,7 +466,7 @@ thead tr th {
   border-bottom: 1px solid #d3d3d3 !important;
   padding: 14px 20px;
 
-  font-family: poppinsMedium;
+  font-family: publicRegular;
   font-size: 13px;
   text-transform: uppercase;
 }
@@ -470,7 +474,7 @@ tbody tr td {
   background-color: rgb(255, 255, 255) !important;
   border-bottom: 1px solid #d3d3d3;
   padding: 14px 20px;
-  font-family: poppinsMedium;
+  font-family: publicRegular;
   font-size: 13px;
   text-transform: uppercase;
 }

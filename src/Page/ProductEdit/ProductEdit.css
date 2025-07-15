@@ -1,32 +1,8 @@
-:root {
+/* :root {
   --primary-color: rgb(83, 109, 254);
   --primary-color-light: #f3f8fb;
   --primary-color-lighter: #e1eff85b;
   --text: #4b5966;
-}
-
-@font-face {
-  font-family: poppinsBold;
-  src: url(../../assets/font/IBMPlexSans-Bold.ttf);
-}
-
-@font-face {
-  font-family: poppinsLight;
-  src: url(../../assets/font/Poppins-Light.ttf);
-}
-
-@font-face {
-  font-family: poppinsSemiBold;
-  src: url(../../assets/font/Poppins-SemiBold.ttf);
-}
-
-@font-face {
-  font-family: poppinsRegular;
-  src: url(../../assets/font/Poppins-Medium.ttf);
-}
-@font-face {
-  font-family: poppinsMedium;
-  src: url(../../assets/font/Poppins-Medium.ttf);
 }
 .body {
   background-color: var(--primary-color-lighter);
@@ -35,14 +11,13 @@
   scrollbar-width: none;
 }
 .create-product-container {
-  padding: 20px 40px;
 }
 .Add-btn {
   background-color: var(--primary-color);
   border: none;
   padding: 10px 30px;
   color: white;
-  font-family: poppinsSemiBold;
+  font-family: "Inter", sans-serif;
   border-radius: 5px;
   text-transform: capitalize;
 }
@@ -53,7 +28,7 @@
   padding: 20px;
 }
 .pricing-head {
-  font-family: poppinsSemiBold;
+  font-family: "Inter", sans-serif;
   color: #4b5966;
 }
 .pricing-form-cont {
@@ -61,7 +36,7 @@
   label {
     margin: 15px 0 10px 0;
     color: #4b5966;
-    font-family: poppinsMedium;
+    font-family: "Inter", sans-serif;
   }
 }
 .pricing {
@@ -73,7 +48,7 @@
 }
 ::placeholder {
   color: #4b5966;
-  font-family: poppinsLight;
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   text-transform: capitalize;
 }
@@ -95,7 +70,7 @@
   overflow: scroll;
 }
 .select-itm {
-  font-family: poppinsMedium;
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   margin-top: 4px;
 }
@@ -108,7 +83,7 @@
 }
 .input-cont {
   label {
-    font-family: poppinsMedium;
+    font-family: "Inter", sans-serif;
     font-size: 14px;
     color: #4b5966;
   }
@@ -123,13 +98,13 @@
 .upload-cont {
   margin-top: 80px;
   label {
-    font-family: poppinsMedium;
+    font-family: "Inter", sans-serif;
     font-size: 14px;
     color: #4b5966;
   }
   .label {
     color: #4b596698;
-    font-family: poppinsRegular;
+    font-family: "Inter", sans-serif;
     font-size: 10px;
     margin-bottom: 10px;
     span {
@@ -155,6 +130,5 @@
 }
 @media screen and (max-width: 600px) {
   .create-product-container {
-    padding: 10px;
   }
-}
+} */

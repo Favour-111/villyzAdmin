@@ -6,12 +6,13 @@ import BreadCrumb from "../../Component/BreadCrumbs/BreadCrumb";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import axios from "axios";
-
+import { IoIosAdd } from "react-icons/io";
 const ProductAdd = () => {
   const [loader, setLoader] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null); // State to store the selected imag
   const [category, setCategory] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
+  const [modal, setModal] = useState(false);
   const [form, setForm] = useState({
     productName: "",
     newPrice: "",
@@ -41,7 +42,16 @@ const ProductAdd = () => {
       setImageUrl(""); // Clear the image URL field
     }
   };
+  const addModal = () => {
+    if (imageUrl.trim() === "") {
+      alert("Please enter a valid URL.");
+      return;
+    }
 
+    setForm({ ...form, image: imageUrl });
+    setSelectedImage(imageUrl);
+    setModal(false); // Close modal after adding
+  };
   // Handle image URL input
   const handleImageUrlChange = (e) => {
     const url = e.target.value;
@@ -224,195 +234,264 @@ const ProductAdd = () => {
 
   return (
     <div className="product">
-      <BreadCrumb name="product create" />
-      <div className="create-product-container">
-        <button className="Add-btn" disabled={loader} onClick={saveDocument}>
-          {loader ? "Please wait..." : "Save Product"}
-        </button>
+      <div className="product-add-headercontainer">
+        <div className="header-content">
+          <div>
+            <div className="add-text">Add a new product</div>
+            <div className="product-order-text">
+              Orders placed across your store
+            </div>
+          </div>
+          <div className="buttons-group">
+            <button className="discard-btn disabled">Discard</button>
+            <button className="draft-btn">Save Draft</button>
+            <button
+              className="Publish-btn"
+              disabled={loader}
+              onClick={saveDocument}
+            >
+              {" "}
+              {loader ? "Please wait..." : "Publish Product"}
+            </button>
+          </div>
+        </div>
+      </div>
 
-        <div className="container">
-          <div className="row mt-5">
-            <div className="col-xl-5 col-sm-12">
-              <div className="left-side">
-                <div className="pricing-container shadow-sm rounded">
-                  <div className="pricing-head">Product Pricing</div>
-                  <div className="pricing-form-cont">
-                    <div className="pricing-form-itm">
-                      <label htmlFor="">Old Price</label>
-                      <br />
-                      <input
-                        type="text"
-                        className="pricing"
-                        placeholder="Old price"
-                        name="oldPrice"
-                        value={form.oldPrice}
-                        onChange={handleInput}
-                      />
-                    </div>
-                    <div className="pricing-form-itm">
-                      <label htmlFor="">New Price</label>
-                      <br />
-                      <input
-                        type="text"
-                        className="pricing"
-                        placeholder="New price"
-                        name="newPrice"
-                        value={form.newPrice}
-                        onChange={handleInput}
-                      />
-                    </div>
-                    <div className="pricing-form-itm">
-                      <label htmlFor="">Rating</label>
-                      <br />
-                      <input
-                        type="text"
-                        className="pricing"
-                        placeholder="Product Rating"
-                        onChange={handleInput}
-                        value={form.Rating}
-                        name="Rating"
-                      />
+      <div className="create-product-container">
+        <div className="row mt-2">
+          <div className="col-xl-4 col-sm-12">
+            <div className="left-side">
+              <div className="pricing-container shadow-sm">
+                <div className="pricing-head">Pricing</div>
+                <div className="pricing-form-cont">
+                  <div className="pricing-form-itm">
+                    <label htmlFor="">Old Price</label>
+                    <br />
+                    <input
+                      type="text"
+                      className="pricing"
+                      placeholder="$3000"
+                      name="oldPrice"
+                      value={form.oldPrice}
+                      onChange={handleInput}
+                    />
+                  </div>
+                  <div className="pricing-form-itm">
+                    <label htmlFor="">New Price</label>
+                    <br />
+                    <input
+                      type="text"
+                      className="pricing"
+                      placeholder="$1700"
+                      name="newPrice"
+                      value={form.newPrice}
+                      onChange={handleInput}
+                    />
+                  </div>
+                  <div className="pricing-form-itm">
+                    <label htmlFor="">Rating</label>
+                    <br />
+                    <input
+                      type="text"
+                      className="pricing"
+                      placeholder="4"
+                      onChange={handleInput}
+                      value={form.Rating}
+                      name="Rating"
+                    />
+                    <div className="tax-cont">
+                      <div>
+                        <input type="checkbox" name="" id="" />
+                      </div>
+                      <div className="mb-1">Charge Tax on this product</div>
                     </div>
                   </div>
                 </div>
-                <div className="availability-container shadow-sm rounded mt-3">
-                  <div className="pricing-head">Availability Status</div>
-                  <div className="pricing-form-cont">
-                    <label htmlFor="">Availability</label>
-                    <select
-                      className="pricing"
-                      name="availability"
-                      value={form.availability}
-                      onChange={handleInput}
-                      id=""
-                    >
-                      <option value="none">Availability</option>
-                      <option value="in Stock">in Stock</option>
-                      <option value="out Of Stock">out Of Stock</option>
-                    </select>
-                  </div>
-                  <div className="pricing-form-cont">
-                    <label htmlFor="">type</label>
-                    <select
-                      className="pricing"
-                      name="deals"
-                      value={form.deals}
-                      onChange={handleInput}
-                      id=""
-                    >
-                      <option value="none">none</option>
-                      <option value="Deal">Deal</option>
-                      <option value="bestSellers">Best Sellers</option>
-                    </select>
-                  </div>
+              </div>
+              <div className="availability-container shadow-sm  mt-3">
+                <div className="pricing-head">Organize</div>
+                <div className="pricing-form-cont">
+                  <label htmlFor="">Availability</label>
+                  <select
+                    className="form-select pricing"
+                    name="availability"
+                    value={form.availability}
+                    onChange={handleInput}
+                    id=""
+                  >
+                    <option className="select-name" value="none">
+                      Availability
+                    </option>
+                    <option value="in Stock">in Stock</option>
+                    <option value="out Of Stock">out Of Stock</option>
+                  </select>
                 </div>
-                <div className="availability-container shadow-sm rounded mt-3">
-                  <div className="pricing-head">Categories</div>
-                  <div className="pricing-form-cont">
-                    <label htmlFor="">Categories</label>
-                    <select
-                      className="pricing"
-                      name="categories"
-                      value={form.categories}
-                      onChange={handleInput}
-                      id=""
-                    >
-                      <option value="none">Categories</option>
-                      {category
-                        .filter((item) => item.visibility === "published")
-                        .map((item) => {
-                          return <option value={item.name}>{item.name}</option>;
-                        })}
-                    </select>
+                <div className="pricing-form-cont">
+                  <label htmlFor="">type</label>
+                  <select
+                    className="form-select pricing"
+                    name="deals"
+                    value={form.deals}
+                    onChange={handleInput}
+                    id=""
+                  >
+                    <option className="select-name">Deals type</option>
+                    <option value="none">None</option>
+                    <option value="Deal">Deal</option>
+                    <option value="bestSellers">Best Sellers</option>
+                  </select>
+                  <div className="row">
+                    <div className="col-10">
+                      <div className="pricing-form-cont">
+                        <label htmlFor="">Categories</label>
+                        <select
+                          className="form-select pricing"
+                          name="categories"
+                          value={form.categories}
+                          onChange={handleInput}
+                          id=""
+                        >
+                          <option className="select-name" value="none">
+                            Categories
+                          </option>
+                          {category
+                            .filter((item) => item.visibility === "published")
+                            .map((item) => {
+                              return (
+                                <option value={item.name}>{item.name}</option>
+                              );
+                            })}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="col-2">
+                      <div className="add-category">
+                        <IoIosAdd />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-xl-7 col-md-12">
-              <div className="product-info shadow-sm">
-                <div className="pricing-head">Product Information</div>
-                <div className="input-cont mt-4">
-                  <label htmlFor="">Product Name</label>
-                  <div>
-                    <input
-                      type="text"
-                      placeholder="Input product name"
-                      onChange={handleInput}
-                      value={form.productName}
-                      name="productName"
-                    />
-                  </div>
-                </div>
-                <div className="input-cont mt-4">
-                  <label htmlFor="">Product Description</label>
-                  <br />
-                  <ReactQuill
-                    theme="snow"
-                    style={{ height: "200px" }}
-                    value={form.productDescription} // Ensure ReactQuill has the correct value
-                    onChange={(value) =>
-                      setForm({ ...form, productDescription: value })
-                    } // Update state on change
-                    placeholder="Enter product description..."
-                  />
-                </div>
-                {/* image */}
-                <div className="upload-cont">
-                  <label htmlFor="file-input">Product Image Upload</label>
+          </div>
+          <div className="col-xl-8 col-md-12">
+            <div className="product-info shadow-sm">
+              <div className="pricing-head">Product Information</div>
+              <div className="input-cont mt-4">
+                <label htmlFor=""> Name</label>
+                <div>
                   <input
-                    type="file"
-                    id="file-input"
-                    name="image"
-                    onChange={handleImageChange}
-                    hidden
-                  />
-
-                  <div className="label">
-                    Only portrait or square images, 2M max and 2000px
-                    max-height.
-                  </div>
-                  <label className="upload" htmlFor="file-input">
-                    {selectedImage ? (
-                      <img
-                        src={selectedImage} // Use selectedImage directly
-                        alt="Selected"
-                        style={{
-                          width: "160px",
-                          height: "160px",
-                          objectFit: "cover",
-                        }}
-                      />
-                    ) : (
-                      <>
-                        <img
-                          width="64"
-                          height="64"
-                          src="https://img.icons8.com/wired/64/upload.png"
-                          alt="upload"
-                        />
-                        <label htmlFor="file-input" className="label">
-                          Drop your images here or select{" "}
-                          <span>click to browse</span>
-                        </label>
-                      </>
-                    )}
-                  </label>
-                  <input
-                    id="fileInput"
-                    type="file"
-                    accept="image/*"
-                    style={{ display: "none" }}
-                    onChange={handleImageChange}
+                    type="text"
+                    placeholder="Iphone 16 Pro max"
+                    onChange={handleInput}
+                    value={form.productName}
+                    name="productName"
                   />
                 </div>
-                <p>or</p>
-                <input
-                  type="text"
-                  placeholder="Paste image URL"
-                  value={imageUrl}
-                  onChange={handleImageUrlChange}
+              </div>
+              <label className="mt-4">Description (optional)</label>
+              <div className="styled-quill-wrapper">
+                <ReactQuill
+                  theme="snow"
+                  value={form.productDescription}
+                  onChange={(value) =>
+                    setForm({ ...form, productDescription: value })
+                  }
+                  className="custom-quill"
+                  placeholder="Keep your account secure with authentication step."
                 />
               </div>
+
+              {/* image */}
+            </div>
+            <div className="image-upload-container">
+              <div className="upload-cont">
+                <label htmlFor="file-input">Product Image Upload</label>
+                <input
+                  type="file"
+                  id="file-input"
+                  name="image"
+                  onChange={handleImageChange}
+                  hidden
+                />
+
+                <div className="label d-flex align-items-center justify-content-between">
+                  Only portrait or square images, 2M max and 2000px max-height.
+                  <div
+                    className="media-url"
+                    onClick={() => {
+                      setModal(true);
+                    }}
+                  >
+                    Add media from URL
+                  </div>
+                </div>
+                <label className="upload" htmlFor="file-input">
+                  {selectedImage ? (
+                    <img
+                      src={selectedImage} // Use selectedImage directly
+                      alt="Selected"
+                      style={{
+                        width: "160px",
+                        height: "160px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  ) : (
+                    <>
+                      <img
+                        width="64"
+                        height="64"
+                        src="https://img.icons8.com/wired/64/upload.png"
+                        alt="upload"
+                      />
+                      <label htmlFor="file-input" className="label">
+                        Drop your images here or select{" "}
+                        <span>click to browse</span>
+                      </label>
+                    </>
+                  )}
+                </label>
+                <input
+                  id="fileInput"
+                  type="file"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={handleImageChange}
+                />
+              </div>
+              {modal && (
+                <div className="media-modal-cont">
+                  <div className="media-modal">
+                    <div className="media-head">Media URL upload</div>
+                    <div className="w-100">
+                      <label htmlFor="" className="mt-3">
+                        Media Link
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control w-100 mt-2"
+                        placeholder="paste media URl"
+                        value={imageUrl}
+                        onChange={handleImageUrlChange}
+                      />
+                    </div>
+                    <div className="button-group">
+                      <button
+                        className="Close-Modal"
+                        onClick={() => {
+                          setModal(false);
+                        }}
+                      >
+                        Close Modal
+                      </button>
+                      <button className="Add-modal" onClick={addModal}>
+                        Add URL
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

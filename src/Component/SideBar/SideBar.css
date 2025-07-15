@@ -7,27 +7,29 @@
 
 @font-face {
   font-family: poppinsBold;
-  src: url(../../assets/font/IBMPlexSans-Bold.ttf);
+  src: url(../../assets/fonts/PublicSans-Bold.otf);
 }
 
 @font-face {
-  font-family: poppinsLight;
-  src: url(../../assets/font/IBMPlexSans-Light.ttf);
+  font-family: publicLight;
+  src: url(../../assets/fonts/PublicSans-Light.otf);
 }
 
 @font-face {
-  font-family: poppinsSemiBold;
-  src: url(../../assets/font/Poppins-SemiBold.ttf);
+  font-family: publicSemiBold;
+  src: url(../../assets/fonts/PublicSans-SemiBold.otf);
 }
 
 @font-face {
-  font-family: poppinsRegular;
-  src: url(../../assets/font/Poppins-Medium.ttf);
+  font-family: publicRegular;
+  src: url(../../assets/fonts/PublicSans-Regular.otf);
 }
+
 @font-face {
-  font-family: poppinsMedium;
-  src: url(../../assets/font/Poppins-Medium.ttf);
+  font-family: publicThin;
+  src: url(../../assets/fonts/PublicSans-Thin.otf);
 }
+
 .sidebar-body {
   position: relative;
 }
@@ -101,7 +103,7 @@
   background-color: white;
 }
 .sidebar-header {
-  font-family: poppinsSemiBold !important;
+  font-family: publicSemiBold !important;
   font-size: 22px;
   color: #4b5966;
   span {
@@ -133,7 +135,7 @@ li {
   text-transform: capitalize;
 }
 .LinkInActive {
-  font-family: poppinsMedium !important;
+  font-family: publicRegular !important;
   text-decoration: none;
   color: var(--text);
   font-size: 14px;
@@ -146,13 +148,13 @@ li {
   display: flex;
   align-items: center;
   padding: 0 10px;
-  font-family: poppinsMedium !important;
+  font-family: publicRegular !important;
   border-radius: 3px;
   text-decoration: none;
   font-size: 14px;
 }
 .Link {
-  font-family: poppinsMedium !important;
+  font-family: publicRegular !important;
   text-decoration: none;
   color: var(--primary-color);
   font-size: 14px;
@@ -167,7 +169,7 @@ li {
   justify-content: center;
   transition: 350ms;
   li {
-    font-family: poppinsMedium;
+    font-family: publicRegular;
     font-size: 13px;
     color: #4b5966;
   }
@@ -188,13 +190,13 @@ li {
   transform: rotate(180deg);
 }
 small {
-  font-family: poppinsSemiBold;
+  font-family: publicSemiBold;
   text-transform: uppercase;
   font-size: 11px;
   color: #4b5966;
 }
 .sm-2 {
-  font-family: poppinsSemiBold;
+  font-family: publicSemiBold;
   text-transform: uppercase;
   font-size: 11px;
   color: #4b5966;
