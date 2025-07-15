@@ -585,11 +585,38 @@ td {
   padding: 10px;
   white-space: nowrap;
 }
-input[type="checkbox"] {
-  background-color: var(--primary-color);
-  height: 15px;
-  width: 15px;
-  border-radius: 10px;
+.check-container {
+  input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #c9ced188;
+    border-radius: 4px;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    background-color: white;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+    color: white;
+    accent-color: var(--primary-color);
+    box-shadow: 0px 0px 9px 0px rgba(83, 109, 254, 0.35);
+    border-color: var(--primary-color);
+  }
+
+  /* ✅ Add checkmark */
+  input[type="checkbox"]:checked::after {
+    content: "✔";
+    color: white;
+    font-size: 12px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 @media screen and (max-width: 620px) {
   .CongratulationText {

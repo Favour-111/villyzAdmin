@@ -475,7 +475,7 @@ const Landing = () => {
                   transform: "translate(-50%, -30%)",
                   fontSize: "20px",
                   fontWeight: "bold",
-                  fontFamily: "PoppinsMedium",
+                  fontFamily: "publicRegular",
                 }}
               >
                 {percentage}%
@@ -640,7 +640,7 @@ const Landing = () => {
             <table>
               <thead>
                 <tr className="table-head">
-                  <th>
+                  <th className="check-container">
                     <input type="checkbox" />
                   </th>
                   <th>#</th>
@@ -657,7 +657,7 @@ const Landing = () => {
                 ) : (
                   currentProducts.map((product) => (
                     <tr>
-                      <td>
+                      <td className="check-container">
                         <input type="checkbox" />
                       </td>
                       <td className="OrderCode">

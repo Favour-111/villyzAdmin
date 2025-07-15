@@ -300,7 +300,7 @@ const ProductAdd = () => {
                       name="Rating"
                     />
                     <div className="tax-cont">
-                      <div>
+                      <div className="product-check">
                         <input type="checkbox" name="" id="" />
                       </div>
                       <div className="mb-1">Charge Tax on this product</div>
@@ -415,7 +415,7 @@ const ProductAdd = () => {
                   hidden
                 />
 
-                <div className="label d-flex align-items-center justify-content-between">
+                <div className="label d-md-flex d-sm-block align-items-center justify-content-between">
                   Only portrait or square images, 2M max and 2000px max-height.
                   <div
                     className="media-url"

@@ -3,14 +3,18 @@ import SideBar from "../../Component/SideBar/SideBar";
 import "./Product.css";
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
 import { CiEdit, CiSearch } from "react-icons/ci";
-import { IoMdAdd } from "react-icons/io";
-import { IoEyeOutline } from "react-icons/io5";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { IoIosAdd, IoIosLaptop, IoMdAdd } from "react-icons/io";
+import { IoEyeOutline, IoGiftOutline } from "react-icons/io5";
+import { RiDeleteBin6Line, RiHomeSmile2Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import BreadCrumb from "../../Component/BreadCrumbs/BreadCrumb";
 import axios from "axios";
+import { TbEdit } from "react-icons/tb";
+
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import { TfiWallet } from "react-icons/tfi";
+import { GoTrash, GoUpload } from "react-icons/go";
 const ProductList = ({ name }) => {
   const [productData, setProduct] = useState([]);
   const [loader, setLoader] = useState(false);
@@ -136,24 +140,98 @@ const ProductList = ({ name }) => {
   return (
     <div className="w-100">
       <div className="product">
-        <BreadCrumb name="product page" />
-        <div className="p-4">
-          <div className="product-body shadow">
-            <div className="d-flex align-items-center gap-2 actionIcons">
-              <div>
-                <MdOutlineTipsAndUpdates />
-              </div>
-              <div className="tips">
-                Tip search by Product ID: Each product is provided with a unique
-                ID, which you can rely on to find the exact product you need.
+        <div className="product-information-container shadow-sm">
+          <div className="product-info-item">
+            <div>
+              <div className="sale-type">In-store sale</div>
+              <div className="sales-price">$5,600</div>
+              <div className="d-flex align-items-center gap-2 mt-1">
+                <div className="orders-number">5k order</div>
+                <div className="order-percentage">+5.7%</div>
               </div>
             </div>
-            <div className="showing">
-              <div className=" d-flex align-items-center gap-1">
-                <div className="table-desc">Showing</div>
+            <div className="Home-icn">
+              <RiHomeSmile2Line />
+            </div>
+          </div>
+          <div className="lin"></div>
+          <div className="product-info-item">
+            <div>
+              <div className="sale-type">Website sale</div>
+              <div className="sales-price">$150,600</div>
+              <div className="d-flex align-items-center gap-2 mt-1">
+                <div className="orders-number">50k order</div>
+                <div className="order-percentage">+5.7%</div>
+              </div>
+            </div>
+            <div className="Home-icn">
+              <IoIosLaptop />
+            </div>
+          </div>
+          <div className="lin"></div>
+
+          <div className="product-info-item">
+            <div>
+              <div className="sale-type">Discount</div>
+              <div className="sales-price">$15,600</div>
+              <div className="d-flex align-items-center gap-2 mt-1">
+                <div className="orders-number">6k order</div>
+                <div className="order-percentage">+5.7%</div>
+              </div>
+            </div>
+            <div className="Home-icn">
+              <IoGiftOutline />
+            </div>
+          </div>
+          <div className="lin"></div>
+
+          <div className="product-info-item">
+            <div>
+              <div className="sale-type">Affiliate</div>
+              <div className="sales-price">$105,600</div>
+              <div className="d-flex align-items-center gap-2 mt-1">
+                <div className="orders-number">10k order</div>
+                <div className="order-percentage-negative">+6.7%</div>
+              </div>
+            </div>
+            <div className="Home-icn">
+              <TfiWallet />
+            </div>
+          </div>
+        </div>
+        <div className="">
+          <div className="product-body shadow">
+            <div className="product-body-head">filters</div>
+            <div className="product-body-filter">
+              <select name="" className="form-control" id="">
+                <option value="status">stock</option>
+                <option value="in Stock">in stock</option>
+                <option value="out of stock">out of stock</option>
+              </select>
+              <select name="" className="form-control" id="">
+                <option value="status">category</option>
+                <option value="in Stock">Electronics</option>
+                <option value="out of stock">Beddings</option>
+              </select>
+              <select name="" className="form-control" id="">
+                <option value="status">status</option>
+                <option value="in Stock">published</option>
+                <option value="out of stock">Active</option>
+                <option value="out of stock">inActive</option>
+              </select>
+            </div>
+            <div className="product-filter-2">
+              <div>
+                <input
+                  type="text"
+                  className="form-control w-100"
+                  placeholder="search product"
+                />
+              </div>
+              <div className="buttons-filter-group">
                 <div>
                   <select
-                    className="select"
+                    className="form-select"
                     name=""
                     id=""
                     value={selectedOption}
@@ -164,37 +242,19 @@ const ProductList = ({ name }) => {
                     <option value="30">30</option>
                   </select>
                 </div>
+                <button className="export-btn">
+                  <GoUpload /> Export
+                </button>
+                <button className="add-product-button">
+                  <IoIosAdd size={20} /> Add Product
+                </button>
               </div>
-              <div className="search-order">
-                <div className="table-desc">Search</div>
-                <div className="product-search ms-1">
-                  <input
-                    type="text"
-                    placeholder="Search products..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                  <div>
-                    <CiSearch />
-                  </div>
-                </div>
-              </div>
-              <button
-                className="add-btn"
-                onClick={() => {
-                  navigate("/productadd");
-                }}
-              >
-                <div>
-                  <IoMdAdd />
-                </div>
-                add product
-              </button>
             </div>
+
             <div
               style={{
                 maxWidth: "100%",
-                height: "500px",
+                height: "100%",
                 overflow: "scroll",
                 scrollbarWidth: "none",
               }}
@@ -202,39 +262,79 @@ const ProductList = ({ name }) => {
               {/* Search Bar */}
 
               {/* Product Table */}
-              <table className="table3">
+              <table className="">
                 <thead>
                   <tr className="tableHead">
+                    <th className="product-check">
+                      <input type="checkbox" />
+                    </th>
                     <th>Product</th>
                     <th>Product ID</th>
                     <th>Category</th>
+                    <th>Stock</th>
                     <th>Price</th>
-                    <th>stock</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {loader ? (
-                    <div className="text-center">loading...</div>
+                    <div className="text-center mt-3">loading...</div>
                   ) : currentProducts.length > 0 ? (
                     currentProducts.map((product, index) => (
                       <tr key={product.id}>
-                        <td>
+                        <td className="product-check">
+                          <input type="checkbox" />
+                        </td>
+                        <td className="d-flex align-items-center gap-2">
                           <img
-                            width={40}
-                            height={40}
+                            width={30}
+                            height={30}
                             src={product.image}
                             alt=""
                           />
-                          {product.productName.slice(0, 40)}
+                          <div>
+                            <div className="product-list-name">
+                              {product.productName.slice(0, 9)}
+                            </div>
+                            <div className="product-list-category">
+                              {product.categories}
+                            </div>
+                          </div>
                         </td>
-                        <td>{index + 1}</td>
-                        <td>{product.categories}</td>
-                        <td>{product.newPrice}</td>
+                        <td>#{product._id.slice(0, 5)}</td>
+                        <td className="product-category">
+                          {product.categories}
+                        </td>
+                        <td>
+                          {product.availability === "out Of Stock" ? (
+                            <div class="form-check form-switch">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                role="switch"
+                                id="switchCheckDefault"
+                              />
+                            </div>
+                          ) : (
+                            <div class="form-check form-switch">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                role="switch"
+                                id="switchCheckDisabled"
+                                checked
+                              />
+                            </div>
+                          )}
+                        </td>
+                        <td className="product-price">${product.newPrice}</td>
                         <td>
                           <div
                             className={
-                              product.availability === "in Stock" ? "in" : "out"
+                              product.availability === "in Stock"
+                                ? "in-design"
+                                : "out-design"
                             }
                           >
                             {product.availability === "in Stock"
@@ -251,7 +351,7 @@ const ProductList = ({ name }) => {
                                 navigate(`/productedit/${product._id}`)
                               }
                             >
-                              <CiEdit size={20} color="green" />
+                              <TbEdit size={20} color="#787878" />
                             </div>
 
                             <div
@@ -261,7 +361,7 @@ const ProductList = ({ name }) => {
                               {Deleteloader ? (
                                 "wait.."
                               ) : (
-                                <RiDeleteBin6Line size={20} color="red" />
+                                <GoTrash size={20} color="#787878" />
                               )}
                             </div>
                           </div>
@@ -283,7 +383,11 @@ const ProductList = ({ name }) => {
 
               {/* Pagination */}
             </div>
-            <div style={{ textAlign: "end" }}>{paginationButtons}</div>
+            {loader ? null : (
+              <div style={{ textAlign: "end", padding: 10 }}>
+                {paginationButtons}
+              </div>
+            )}
           </div>
         </div>
       </div>
