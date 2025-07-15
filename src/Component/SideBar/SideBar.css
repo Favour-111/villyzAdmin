@@ -143,13 +143,27 @@ li {
 .Link-active {
   text-transform: capitalize;
   list-style-type: none;
-  background-color: var(--primary-color-lighter) !important;
+  background-color: var(--primary-color) !important;
   height: 40px;
   display: flex;
+  box-shadow: 0px 0px 7px 0px rgba(83, 109, 254, 0.55);
   align-items: center;
   padding: 0 10px;
+  color: white !important;
   font-family: publicRegular !important;
-  border-radius: 3px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 14px;
+}
+.Link-active .actionIcons {
+  color: white !important;
+}
+.Link-active .dropdownIcn {
+  color: white !important;
+}
+.Link-Open {
+  color: white !important;
+  font-family: publicRegular !important;
   text-decoration: none;
   font-size: 14px;
 }

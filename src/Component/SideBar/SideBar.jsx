@@ -133,7 +133,10 @@ const SideBar = () => {
                   window.scrollTo(0, 0);
                 }}
               >
-                <Link className="Link" to="/page">
+                <Link
+                  className={activeLink === "dashboard" ? "Link-Open" : "Link"}
+                  to="/page"
+                >
                   <div className="d-flex align-items-center gap-2 actionIcons">
                     <GoHome size={15} />
                     <div>Dashboard</div>
