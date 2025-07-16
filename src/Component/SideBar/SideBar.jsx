@@ -188,7 +188,7 @@ const SideBar = () => {
               </li>
 
               {/* Category Dropdown */}
-              <li className="list">
+              {/* <li className="list">
                 <div
                   className={
                     activeLink === "category" ? "Link-active" : "link-inactive"
@@ -225,9 +225,26 @@ const SideBar = () => {
                   <li onClick={() => navigate("/category")}>Category List</li>
                   <li onClick={() => navigate("/categoryadd")}>Add Category</li>
                 </ul>
-              </li>
+              </li> */}
 
               {/* Orders */}
+              <li
+                className={
+                  activeLink === "category" ? "Link-active" : "link-inactive"
+                }
+                onClick={() => {
+                  handleLinkClick("category");
+                  navigate("/category");
+                  window.scrollTo(0, 0);
+                }}
+              >
+                <Link className="LinkInActive">
+                  <div className="d-flex align-items-center gap-2 actionIcons">
+                    <AiOutlineProduct size={15} />
+                    <div>Category</div>
+                  </div>
+                </Link>
+              </li>
               <li
                 className={
                   activeLink === "orders" ? "Link-active" : "link-inactive"

@@ -5,4 +5,5 @@
 .Page-Container {
   background-color: rgba(83, 109, 254, 0.03);
   padding: 20px 20px 100px 20px;
+  height: 100vh;
 }

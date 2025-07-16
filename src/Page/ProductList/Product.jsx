@@ -203,17 +203,17 @@ const ProductList = ({ name }) => {
           <div className="product-body shadow">
             <div className="product-body-head">filters</div>
             <div className="product-body-filter">
-              <select name="" className="form-control" id="">
+              <select name="" className="form-select p-2" id="">
                 <option value="status">stock</option>
                 <option value="in Stock">in stock</option>
                 <option value="out of stock">out of stock</option>
               </select>
-              <select name="" className="form-control" id="">
+              <select name="" className="form-select p-2" id="">
                 <option value="status">category</option>
                 <option value="in Stock">Electronics</option>
                 <option value="out of stock">Beddings</option>
               </select>
-              <select name="" className="form-control" id="">
+              <select name="" className="form-select p-2" id="">
                 <option value="status">status</option>
                 <option value="in Stock">published</option>
                 <option value="out of stock">Active</option>

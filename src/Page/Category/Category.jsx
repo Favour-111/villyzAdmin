@@ -10,6 +10,8 @@ import BreadCrumb from "../../Component/BreadCrumbs/BreadCrumb";
 import axios from "axios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import { TbEdit } from "react-icons/tb";
+import { GoTrash } from "react-icons/go";
 const Category = () => {
   const navigate = useNavigate();
   const [productData, setProductData] = useState([]);
@@ -23,21 +25,6 @@ const Category = () => {
       );
       if (response) {
         setProductData(response.data.response);
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          },
-        });
-        Toast.fire({
-          icon: "success",
-          title: "fetched successfully",
-        });
       } else {
         const Toast = Swal.mixin({
           toast: true,
@@ -154,23 +141,88 @@ const Category = () => {
       setDeleteLoader(false);
     }
   };
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [form, setForm] = useState({
+    name: "",
+    visibility: "",
+    image: null,
+  });
+
+  const handleInput = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleImageChange = (e) => {
+    const imageFile = e.target.files[0];
+
+    if (imageFile) {
+      setForm((prevForm) => ({
+        ...prevForm,
+        image: imageFile, // Store the image file
+      }));
+
+      const imageUrl = URL.createObjectURL(imageFile);
+      setSelectedImage(imageUrl); // Store the image preview URL
+    }
+  };
+
+  const saveDocument = async (e) => {
+    e.preventDefault();
+    if (!form.name || !form.visibility || !form.image) {
+      return Swal.fire({ icon: "error", title: "All fields are required!" });
+    }
+
+    const formData = new FormData();
+    formData.append("name", form.name);
+    formData.append("visibility", form.visibility);
+    formData.append("image", form.image);
+
+    try {
+      setLoader(true);
+      const response = await axios.post(
+        "https://villyzstore.onrender.com/category",
+        formData
+      );
+      if (response) {
+        Swal.fire({
+          icon: "success",
+          title: "Category added successfully!",
+          timer: 3000,
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+        });
+
+        // Reset form state
+        setForm({ name: "", visibility: "", image: null });
+        setSelectedImage(null);
+      }
+    } catch (error) {
+      Swal.fire({ icon: "error", title: "Network error!" });
+    } finally {
+      setLoader(false);
+    }
+  };
+
   return (
     <div className="w-100">
       <div className="product">
-        <BreadCrumb name="Category page" />
-        <div className="p-4">
+        <div className="mt-3">
           <div className="product-body shadow">
-            <div className="d-flex align-items-center gap-2 actionIcons">
+            <div className="top-body">
               <div>
-                <MdOutlineTipsAndUpdates />
+                <input
+                  type="text"
+                  className="form-control w-100"
+                  placeholder="Search category..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
               </div>
-            </div>
-            <div className="showing mt-4">
-              <div className=" d-flex align-items-center gap-1">
-                <div className="table-desc">Showing</div>
+              <div className="d-flex align-items-center gap-2">
                 <div>
                   <select
-                    className="select"
+                    className="form-select"
                     name=""
                     id=""
                     value={selectedOption}
@@ -181,37 +233,135 @@ const Category = () => {
                     <option value="30">30</option>
                   </select>
                 </div>
-              </div>
-              <div className="search-order ">
-                <div className="table-desc">Search</div>
-                <div className="product-search ms-1">
-                  <input
-                    type="text"
-                    placeholder="Search category..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                  <div>
-                    <CiSearch />
-                  </div>
-                </div>
-              </div>
-              <button
-                className="add-btn"
-                onClick={() => {
-                  navigate("/categoryadd");
-                }}
-              >
                 <div>
-                  <IoMdAdd />
+                  <div
+                    class="offcanvas offcanvas-end"
+                    tabindex="-1"
+                    id="offcanvasRight"
+                    aria-labelledby="offcanvasRightLabel"
+                  >
+                    <div class="offcanvas-header">
+                      <h5 class="offcanvas-title" id="offcanvasRightLabel">
+                        Add Category
+                      </h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="offcanvas-body">
+                      <div>
+                        <label htmlFor="">Title</label>
+                        <input
+                          type="text"
+                          className="form-control w-100"
+                          placeholder="Category Name"
+                          name="name"
+                          value={form.name}
+                          onChange={handleInput}
+                        />
+                      </div>
+                      <div className="mt-3">
+                        <label htmlFor="">Category Status</label>
+                        <select
+                          name="visibility"
+                          className="form-select p-2 mt-1"
+                          value={form.visibility}
+                          onChange={handleInput}
+                          // value={form.visibility}
+                          // onChange={handleInput}
+                        >
+                          <option value="">Select visibility</option>
+                          <option value="hidden">Hidden</option>
+                          <option value="published">Published</option>
+                        </select>
+                      </div>
+                      <div className=" mt-4">
+                        <label>Category Image*</label>
+                        <div className="upload-cont-img">
+                          <div className="label2">
+                            Only portrait/square images, 2MB max, 2000px
+                            max-height.
+                          </div>
+                          <div
+                            className="upload-img"
+                            onClick={() =>
+                              document.getElementById("fileInput").click()
+                            }
+                          >
+                            {selectedImage ? (
+                              <img
+                                src={selectedImage}
+                                alt="Selected"
+                                style={{
+                                  width: "160px",
+                                  height: "160px",
+                                  objectFit: "cover",
+                                }}
+                              />
+                            ) : (
+                              <>
+                                <img
+                                  width="64"
+                                  height="64"
+                                  src="https://img.icons8.com/wired/64/upload.png"
+                                  alt="upload"
+                                />
+                                <label className="label">
+                                  Drop your images here or{" "}
+                                  <span>click to browse</span>
+                                </label>
+                              </>
+                            )}
+                          </div>
+                          <input
+                            id="fileInput"
+                            type="file"
+                            accept="image/*"
+                            style={{ display: "none" }}
+                            onChange={handleImageChange}
+                          />
+                        </div>
+                        <div className="button-group">
+                          <button
+                            className="add-button"
+                            disabled={loader}
+                            onClick={saveDocument}
+                          >
+                            {loader ? "Please wait..." : "Add"}
+                          </button>
+                          <button
+                            className="discard-button"
+                            data-bs-dismiss="offcanvas"
+                            aria-label="Close"
+                          >
+                            Discard
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    className="addCategory"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasRight"
+                    aria-controls="offcanvasRight"
+                  >
+                    <div>
+                      <IoMdAdd />
+                    </div>
+                    add category
+                  </button>
                 </div>
-                add category
-              </button>
+              </div>
             </div>
             <div
               style={{
                 maxWidth: "100%",
-                height: "500px",
+                height: "auto",
                 overflow: "scroll",
                 scrollbarWidth: "none",
               }}
@@ -222,10 +372,13 @@ const Category = () => {
               <table className="table3">
                 <thead>
                   <tr className="tableHead">
-                    <th>category</th>
-                    <th>id</th>
-                    <th>Category</th>
-                    <th>visibility</th>
+                    <th className="product-check">
+                      <input type="checkbox" />
+                    </th>
+                    <th>CATEGORIES</th>
+                    <th>CATEGORY ID</th>
+                    <th>TOTAL PRODUCTS</th>
+                    <th>STATUS</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -235,20 +388,32 @@ const Category = () => {
                   ) : currentProducts.length > 0 ? (
                     currentProducts.map((product, index) => (
                       <tr key={product.id}>
-                        <td>
+                        <td className="product-check">
+                          <input type="checkbox" />
+                        </td>
+                        <td className="d-flex align-items-center gap-2">
                           <img
+                            className="category-img"
                             width={40}
                             height={40}
-                            src={product.image}
+                            src="https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-1/assets/product-1-CnD-btSp.png"
                             alt={product.name}
                           />
+                          <div>
+                            <div>{product.name}</div>
+                            <div className="category-under">
+                              Villyz Category
+                            </div>
+                          </div>
                         </td>
-                        <td>{index + 1}</td>
-                        <td>{product.name}</td>
+                        <td>#{product._id.slice(0, 5)}</td>
+                        <td>1,200</td>
                         <td>
                           <div
                             className={
-                              product.visibility === "published" ? "in" : "out"
+                              product.visibility === "published"
+                                ? "in-visible"
+                                : "out"
                             }
                           >
                             {product.visibility}
@@ -262,7 +427,7 @@ const Category = () => {
                                 navigate(`/editCategory/${product._id}`)
                               }
                             >
-                              <CiEdit size={20} color="green" />
+                              <TbEdit size={20} color="#787878" />
                             </div>
                             <div
                               className="DeleteIcn"
@@ -271,7 +436,7 @@ const Category = () => {
                               {Deleteloader ? (
                                 "wait.."
                               ) : (
-                                <RiDeleteBin6Line size={20} color="red" />
+                                <GoTrash size={20} color="#787878" />
                               )}
                             </div>
                           </div>
