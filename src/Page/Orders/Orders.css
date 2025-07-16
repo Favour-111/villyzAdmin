@@ -1,7 +1,37 @@
+:root {
+  --primary-color: rgb(83, 109, 254);
+  --primary-color-light: #f3f8fb;
+  --primary-color-lighter: #e1eff85b;
+  --text: #4b5966;
+}
+@font-face {
+  font-family: poppinsBold;
+  src: url(../../assets/fonts/PublicSans-Bold.otf);
+}
+
+@font-face {
+  font-family: publicLight;
+  src: url(../../assets/fonts/PublicSans-Light.otf);
+}
+
+@font-face {
+  font-family: publicSemiBold;
+  src: url(../../assets/fonts/PublicSans-SemiBold.otf);
+}
+
+@font-face {
+  font-family: publicRegular;
+  src: url(../../assets/fonts/PublicSans-Regular.otf);
+}
+
+@font-face {
+  font-family: publicThin;
+  src: url(../../assets/fonts/PublicSans-Thin.otf);
+}
+
 .actionIcons {
   .EyeIcn {
-    background-color: rgba(0, 0, 255, 0.098) !important;
-    width: 50px;
+    width: 30px;
     height: 30px;
     border-radius: 10px;
     display: flex;
@@ -9,6 +39,7 @@
     align-items: center;
     justify-content: center;
   }
+
   .EditIcn {
     width: 30px;
     height: 30px;
@@ -28,17 +59,95 @@
     justify-content: center;
   }
 }
+.master-card {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.card-img {
+  background-color: #0000000a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  padding: 3px 0;
+  img {
+    width: 19px;
+    height: 12px;
+  }
+}
+.user-profile {
+  color: var(--primary-color) !important;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(83, 109, 254, 0.1);
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  font-size: 15px;
+}
+.username {
+  color: #4b5966;
+  font-family: publicSemiBold;
+}
+.useremail {
+  color: #787878;
+  font-family: publicLight;
+}
+.processing {
+  color: orange;
+  background-color: rgba(255, 166, 0, 0.205);
+  padding: 4px 10px;
+  border-radius: 5px;
+  width: 140px;
+  text-align: center;
+}
+.delivered {
+  color: rgb(91 212 145);
+  background-color: rgba(91, 212, 145, 0.135);
+  padding: 4px 10px;
+  border-radius: 5px;
+  width: 80px;
+  text-align: center;
+}
+.Shipped {
+  color: rgb(21 192 213);
+  background-color: rgba(21, 191, 213, 0.11);
+  padding: 4px 10px;
+  border-radius: 5px;
+  width: 140px;
+  text-align: center;
+}
+.Shipping {
+  color: rgb(126 115 241);
+  background-color: rgba(125, 115, 241, 0.132);
+  padding: 4px 10px;
+  border-radius: 5px;
+  width: 140px;
+  text-align: center;
+}
+.cancelled {
+  color: red;
+  background-color: rgba(255, 0, 0, 0.132);
+  padding: 4px 10px;
+  border-radius: 5px;
+  width: 140px;
+  text-align: center;
+}
+
 .modal-title {
-  font-family: poppinsMedium;
+  font-family: publicRegular;
 }
 .modal-body {
-  font-family: poppinsMedium;
+  font-family: publicRegular;
   font-size: 14px;
 }
 .paid {
   background-color: rgb(2, 159, 2);
   padding: 3px 10px;
-  font-family: poppinsMedium;
+  font-family: publicRegular;
   text-transform: capitalize;
   font-size: 12px;
   border-radius: 9px;
@@ -50,11 +159,11 @@
   text-transform: capitalize;
 }
 .order-details {
-  font-family: poppinsMedium;
+  font-family: publicRegular;
   font-size: 13px;
 }
 .address {
-  font-family: poppinsMedium;
+  font-family: publicRegular;
   font-size: 13px;
   color: #787878;
   div {

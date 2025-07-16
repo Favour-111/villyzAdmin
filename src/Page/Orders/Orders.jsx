@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import SideBar from "../../Component/SideBar/SideBar";
 import "./Orders.css";
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
-import { CiEdit, CiSearch } from "react-icons/ci";
+import { CiEdit, CiExport, CiSearch } from "react-icons/ci";
 import { IoMdAdd } from "react-icons/io";
 import { IoEyeOutline } from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import BreadCrumb from "../../Component/BreadCrumbs/BreadCrumb";
 import axios from "axios";
+import { TfiExport } from "react-icons/tfi";
 import { useEffect } from "react";
+import { LuEye } from "react-icons/lu";
+import { GoTrash } from "react-icons/go";
 const Orders = () => {
   const navigate = useNavigate();
   const [productData, setProductData] = useState([]);
@@ -144,24 +147,22 @@ const Orders = () => {
   return (
     <div className="w-100">
       <div className="product">
-        <BreadCrumb name="Order page" />
-        <div className="p-4">
+        <div className="mt-4">
           <div className="product-body shadow">
-            <div className="d-flex align-items-center gap-2 actionIcons">
+            <div className="top-body">
               <div>
-                <MdOutlineTipsAndUpdates />
+                <input
+                  type="text"
+                  className="form-control w-100"
+                  placeholder="Search By Customer name..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
               </div>
-              <div className="tips">
-                Tip search by Product ID: Each product is provided with a unique
-                ID, which you can rely on to find the exact product you need.
-              </div>
-            </div>
-            <div className="showing">
-              <div className=" d-flex align-items-center gap-1">
-                <div className="table-desc">Showing</div>
+              <div className="d-flex align-items-center gap-2">
                 <div>
                   <select
-                    className="select"
+                    className="form-select"
                     name=""
                     id=""
                     value={selectedOption}
@@ -172,26 +173,21 @@ const Orders = () => {
                     <option value="30">30</option>
                   </select>
                 </div>
-              </div>
-              <div className="search-order">
-                <div className="table-desc">Search</div>
-                <div className="product-search ms-1">
-                  <input
-                    type="text"
-                    placeholder="Search customer name..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                  <div>
-                    <CiSearch />
-                  </div>
+                <div>
+                  <button className="addCategory">
+                    <div>
+                      <TfiExport size={13} />
+                    </div>
+                    Export
+                  </button>
                 </div>
               </div>
             </div>
+
             <div
               style={{
                 maxWidth: "100%",
-                height: "500px",
+                height: "auto",
                 overflow: "scroll",
                 scrollbarWidth: "none",
               }}
@@ -202,31 +198,68 @@ const Orders = () => {
               <table className="table2">
                 <thead>
                   <tr className="tableHead">
-                    <th>order ID</th>
-                    <th>Created at</th>
-                    <th>Customer</th>
-                    <th>Total</th>
-                    <th>OrderStatus</th>
-                    <th>Action</th>
+                    <th className="product-check">
+                      <input type="checkbox" />
+                    </th>
+                    <th>ORDER ID</th>
+                    <th>DATE</th>
+                    <th>CUSTOMERS</th>
+                    <th>TOTAL</th>
+                    <th>STATUS</th>
+                    <th>METHOD</th>
+                    <th>ACTION</th>
                   </tr>
                 </thead>
                 <tbody>
                   {currentProducts.length > 0 ? (
                     currentProducts.map((product) => (
                       <tr key={product.id}>
-                        <td>{product._id}</td>
-                        <td>{product.date}</td>
-                        <td>{product.name}</td>
-                        <td>{product.OrderPrice}</td>
-                        <td>
-                          <div
-                            className={
-                              product.orderStatus === "process" ? "in" : "out"
-                            }
-                          >
-                            {product.orderStatus}
+                        <td className="product-check">
+                          <input type="checkbox" />
+                        </td>
+                        <td>#{product._id.slice(0, 8)}</td>
+                        <td>{product.date.slice(0, 10)}</td>
+                        <td className="d-flex align-items-center gap-1">
+                          <div>
+                            <div className="user-profile">
+                              {product.name.slice(0, 2)}
+                            </div>
+                          </div>
+                          <div>
+                            <div className="username">{product.name}</div>
+                            <div className="useremail">
+                              omojolaobaloluwa@gmail.com
+                            </div>
                           </div>
                         </td>
+                        <td>${product.OrderPrice}</td>
+                        <td>
+                          {product.orderStatus === "Processing" ? (
+                            <div className="processing">
+                              Processing Delivery
+                            </div>
+                          ) : product.orderStatus === "Delivered" ? (
+                            <div className="delivered">Delivered </div>
+                          ) : product.orderStatus === "Shipped" ? (
+                            <div className="Shipped">Ready to PickUp</div>
+                          ) : product.orderStatus === "Shipping" ? (
+                            <div className="Shipping">Out for Delivery</div>
+                          ) : (
+                            <div className="cancelled">Order Cancelled</div>
+                          )}
+                        </td>
+                        <td>
+                          <div className="master-card">
+                            <div className="card-img">
+                              <img
+                                src="https://pngimg.com/d/mastercard_PNG16.png"
+                                alt=""
+                              />
+                            </div>
+                            <div>...8324</div>
+                          </div>
+                        </td>
+
                         <td>
                           <div className="d-flex align-items-center gap-2 actionIcons">
                             <div
@@ -236,14 +269,14 @@ const Orders = () => {
                               data-bs-target="#staticBackdrop"
                               onClick={() => setSelectedOrder(product)}
                             >
-                              <IoEyeOutline size={20} color="blue" />
+                              <LuEye color="#787878" size={18} />
                             </div>
 
                             <div
                               className="DeleteIcn"
                               onClick={() => handleDelete(product._id)}
                             >
-                              <RiDeleteBin6Line size={20} color="red" />
+                              <GoTrash size={18} color="#787878" />
                             </div>
                           </div>
                         </td>
