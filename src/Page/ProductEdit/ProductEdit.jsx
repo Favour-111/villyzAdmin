@@ -7,6 +7,7 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+import { IoIosAdd } from "react-icons/io";
 const ProductEdit = () => {
   const [loader, setLoader] = useState(false);
   const { id } = useParams();
@@ -237,184 +238,220 @@ const ProductEdit = () => {
   }, []);
   return (
     <div className="product">
-      <BreadCrumb name="product edit" />
-      <div className="create-product-container">
-        <button className="Add-btn" disabled={loader} onClick={saveDocument}>
-          {loader ? "Please wait..." : "Update Product"}
-        </button>
-
-        <div className="container">
-          <div className="row mt-5">
-            <div className="col-xl-5 col-sm-12">
-              <div className="left-side">
-                <div className="pricing-container shadow-sm rounded">
-                  <div className="pricing-head">Product Edit</div>
-                  <div className="pricing-form-cont">
-                    <div className="pricing-form-itm">
-                      <label htmlFor="">Old Price</label>
-                      <br />
-                      <input
-                        type="text"
-                        className="pricing"
-                        placeholder="Old price"
-                        name="oldPrice"
-                        value={form.oldPrice}
-                        onChange={handleInput}
-                      />
-                    </div>
-                    <div className="pricing-form-itm">
-                      <label htmlFor="">New Price</label>
-                      <br />
-                      <input
-                        type="text"
-                        className="pricing"
-                        placeholder="New price"
-                        name="newPrice"
-                        value={form.newPrice}
-                        onChange={handleInput}
-                      />
-                    </div>
-                    <div className="pricing-form-itm">
-                      <label htmlFor="">Rating</label>
-                      <br />
-                      <input
-                        type="text"
-                        className="pricing"
-                        placeholder="Product Rating"
-                        onChange={handleInput}
-                        value={form.Rating}
-                        name="Rating"
-                      />
+      <div className="product-add-headercontainer">
+        <div className="header-content">
+          <div>
+            <div className="add-text">Edit a product</div>
+            <div className="product-order-text">
+              Orders placed across your store
+            </div>
+          </div>
+          <div className="buttons-group">
+            <button className="discard-btn disabled">Discard</button>
+            <button className="draft-btn">Save Draft</button>
+            <button
+              className="Publish-btn"
+              disabled={loader}
+              onClick={saveDocument}
+            >
+              {" "}
+              {loader ? "Please wait..." : "Edit Product"}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="create-product-container mt-4">
+        <div className="row mt-5">
+          <div className="col-xl-4 col-sm-12">
+            <div className="left-side">
+              <div className="pricing-container shadow-sm">
+                <div className="pricing-head">Pricing</div>
+                <div className="pricing-form-cont">
+                  <div className="pricing-form-itm">
+                    <label htmlFor="">Old Price</label>
+                    <br />
+                    <input
+                      type="text"
+                      className="pricing"
+                      placeholder="$3000"
+                      name="oldPrice"
+                      value={form.oldPrice}
+                      onChange={handleInput}
+                    />
+                  </div>
+                  <div className="pricing-form-itm">
+                    <label htmlFor="">New Price</label>
+                    <br />
+                    <input
+                      type="text"
+                      className="pricing"
+                      placeholder="$1700"
+                      name="newPrice"
+                      value={form.newPrice}
+                      onChange={handleInput}
+                    />
+                  </div>
+                  <div className="pricing-form-itm">
+                    <label htmlFor="">Rating</label>
+                    <br />
+                    <input
+                      type="text"
+                      className="pricing"
+                      placeholder="4"
+                      onChange={handleInput}
+                      value={form.Rating}
+                      name="Rating"
+                    />
+                    <div className="tax-cont">
+                      <div className="product-check">
+                        <input type="checkbox" name="" id="" />
+                      </div>
+                      <div className="mb-1">Charge Tax on this product</div>
                     </div>
                   </div>
                 </div>
-                <div className="availability-container shadow-sm rounded mt-3">
-                  <div className="pricing-head">Availability Status</div>
-                  <div className="pricing-form-cont">
-                    <label htmlFor="">Availability</label>
-                    <select
-                      className="pricing"
-                      name="availability"
-                      onChange={handleInput}
-                      id=""
-                      value={form.availability}
-                    >
-                      <option value="none">Availability</option>
-                      <option value="in Stock">in Stock</option>
-                      <option value="out Of Stock">out Of Stock</option>
-                    </select>
-                  </div>
-                  <div className="pricing-form-cont">
-                    <label htmlFor="">type</label>
-                    <select
-                      className="pricing"
-                      value={form.deals}
-                      name="deals"
-                      onChange={handleInput}
-                      id=""
-                    >
-                      <option value="none">none</option>
-                      <option value="Deal">Deal</option>
-                      <option value="bestSellers">Best Sellers</option>
-                    </select>
-                  </div>
+              </div>
+              <div className="availability-container shadow-sm  mt-3">
+                <div className="pricing-head">Organize</div>
+                <div className="pricing-form-cont">
+                  <label htmlFor="">Availability</label>
+                  <select
+                    className="form-select pricing"
+                    name="availability"
+                    value={form.availability}
+                    onChange={handleInput}
+                    id=""
+                  >
+                    <option className="select-name" value="none">
+                      Availability
+                    </option>
+                    <option value="in Stock">in Stock</option>
+                    <option value="out Of Stock">out Of Stock</option>
+                  </select>
                 </div>
-                <div className="availability-container shadow-sm rounded mt-3">
-                  <div className="pricing-head">Categories</div>
-                  <div className="pricing-form-cont">
-                    <label htmlFor="">Categories</label>
-                    <select
-                      className="pricing"
-                      value={form.categories}
-                      onChange={handleInput}
-                      id=""
-                    >
-                      <option value="none">Categories</option>
-                      {category
-                        .filter((item) => item.visibility === "published")
-                        .map((item) => {
-                          return <option value={item.name}>{item.name}</option>;
-                        })}
-                    </select>
+                <div className="pricing-form-cont">
+                  <label htmlFor="">type</label>
+                  <select
+                    className="form-select pricing"
+                    name="deals"
+                    value={form.deals}
+                    onChange={handleInput}
+                    id=""
+                  >
+                    <option className="select-name">Deals type</option>
+                    <option value="none">None</option>
+                    <option value="Deal">Deal</option>
+                    <option value="bestSellers">Best Sellers</option>
+                  </select>
+                  <div className="row">
+                    <div className="col-10">
+                      <div className="pricing-form-cont">
+                        <label htmlFor="">Categories</label>
+                        <select
+                          className="form-select pricing"
+                          name="categories"
+                          value={form.categories}
+                          onChange={handleInput}
+                          id=""
+                        >
+                          <option className="select-name" value="none">
+                            Categories
+                          </option>
+                          {category
+                            .filter((item) => item.visibility === "published")
+                            .map((item) => {
+                              return (
+                                <option value={item.name}>{item.name}</option>
+                              );
+                            })}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="col-2">
+                      <div className="add-category">
+                        <IoIosAdd />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-xl-7 col-md-12">
-              <div className="product-info shadow-sm">
-                <div className="pricing-head">Product Information</div>
-                <div className="input-cont mt-4">
-                  <label htmlFor="">Product Name</label>
-                  <div>
-                    <input
-                      type="text"
-                      placeholder="Input product name"
-                      onChange={handleInput}
-                      name="productName"
-                      value={form.productName}
-                    />
-                  </div>
-                </div>
-                <div className="input-cont mt-4">
-                  <label htmlFor="">Product Description</label>
-                  <br />
-                  <ReactQuill
-                    theme="snow"
-                    style={{ height: "200px" }}
-                    value={form.productDescription}
-                    onChange={handleQuillChange}
-                    // Update state on change
-                    placeholder="Enter product description..."
-                  />
-                </div>
-                <div className="upload-cont">
-                  <label htmlFor="file-input">Product Image Upload</label>
+          </div>
+          <div className="col-xl-8 col-md-12">
+            <div className="product-info shadow-sm">
+              <div className="pricing-head">Product Information</div>
+              <div className="input-cont mt-4">
+                <label htmlFor=""> Name</label>
+                <div>
                   <input
-                    type="file"
-                    id="file-input"
-                    name="image"
-                    onChange={handleImageChange}
-                    hidden
-                  />
-
-                  <div className="label">
-                    Only portrait or square images, 2M max and 2000px
-                    max-height.
-                  </div>
-                  <label className="upload" htmlFor="file-input">
-                    {selectedImage ? (
-                      <img
-                        src={selectedImage} // Use selectedImage directly
-                        alt="Selected"
-                        style={{
-                          width: "160px",
-                          height: "160px",
-                          objectFit: "cover",
-                        }}
-                      />
-                    ) : (
-                      <>
-                        <img
-                          style={{
-                            width: "160px",
-                            height: "160px",
-                            objectFit: "cover",
-                          }}
-                          src={form.image}
-                          alt="upload"
-                        />
-                      </>
-                    )}
-                  </label>
-                  <input
-                    id="fileInput"
-                    type="file"
-                    accept="image/*"
-                    style={{ display: "none" }}
-                    onChange={handleImageChange}
+                    type="text"
+                    placeholder="Iphone 16 Pro max"
+                    onChange={handleInput}
+                    value={form.productName}
+                    name="productName"
                   />
                 </div>
               </div>
+              <label className="mt-4">Description (optional)</label>
+              <div className="styled-quill-wrapper">
+                <ReactQuill
+                  theme="snow"
+                  value={form.productDescription}
+                  onChange={(value) =>
+                    setForm({ ...form, productDescription: value })
+                  }
+                  className="custom-quill"
+                  placeholder="Keep your account secure with authentication step."
+                />
+              </div>
+
+              {/* image */}
+            </div>
+            <div className="upload-cont shadow-sm">
+              <label htmlFor="file-input">Product Image Upload</label>
+              <input
+                type="file"
+                id="file-input"
+                name="image"
+                onChange={handleImageChange}
+                hidden
+              />
+
+              <div className="label">
+                Only portrait or square images, 2M max and 2000px max-height.
+              </div>
+              <label className="upload" htmlFor="file-input">
+                {selectedImage ? (
+                  <img
+                    src={selectedImage} // Use selectedImage directly
+                    alt="Selected"
+                    style={{
+                      width: "160px",
+                      height: "160px",
+                      objectFit: "cover",
+                    }}
+                  />
+                ) : (
+                  <>
+                    <img
+                      style={{
+                        width: "160px",
+                        height: "160px",
+                        objectFit: "cover",
+                      }}
+                      src={form.image}
+                      alt="upload"
+                    />
+                  </>
+                )}
+              </label>
+              <input
+                id="fileInput"
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={handleImageChange}
+              />
             </div>
           </div>
         </div>

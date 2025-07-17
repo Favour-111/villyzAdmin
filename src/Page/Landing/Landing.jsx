@@ -35,7 +35,6 @@ import Swal from "sweetalert2";
 import img from "../../assets/images/alluring-distinguished-casual-man-in-a-t-shirt-and-jeans-with-transparent-background-free-png.webp";
 import { CiMenuKebab, CiWallet } from "react-icons/ci";
 import { HiOutlineTrash } from "react-icons/hi2";
-
 // Register necessary chart components
 ChartJS.register(
   LineElement,
@@ -373,7 +372,7 @@ const Landing = () => {
           <div className="CongratulationText">Congratulation Villyz! 🎉</div>
           <div className="bestSeller">Best Seller of the month</div>
           <div className="SalesPrice">$48.6k</div>
-          <button>View Sales</button>
+          <button onClick={() => navigate("/orders")}>View Sales</button>
         </div>
         <div>
           <img src={img} alt="image" />
@@ -611,7 +610,7 @@ const Landing = () => {
                 </select>
               </div>
             </div>
-            <button className="order-button">
+            <button className="order-button" onClick={navigate("/orders")}>
               <IoIosAdd size={22} />
               Show all Orders
             </button>

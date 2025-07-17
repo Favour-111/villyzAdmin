@@ -245,7 +245,10 @@ const ProductList = ({ name }) => {
                 <button className="export-btn">
                   <GoUpload /> Export
                 </button>
-                <button className="add-product-button">
+                <button
+                  className="add-product-button"
+                  onClick={() => navigate("/productadd")}
+                >
                   <IoIosAdd size={20} /> Add Product
                 </button>
               </div>
