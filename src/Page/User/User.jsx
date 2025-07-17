@@ -3,13 +3,14 @@ import SideBar from "../../Component/SideBar/SideBar";
 import "./User.css";
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
 import { CiEdit, CiSearch } from "react-icons/ci";
-import { IoMdAdd } from "react-icons/io";
+import { IoIosAdd, IoMdAdd } from "react-icons/io";
 import { IoEyeOutline } from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import BreadCrumb from "../../Component/BreadCrumbs/BreadCrumb";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { GoUpload } from "react-icons/go";
 const User = ({ name }) => {
   const [loader, setLoader] = useState(false);
   const [productData, setProductData] = useState([]);
@@ -22,6 +23,7 @@ const User = ({ name }) => {
       );
       if (response) {
         setProductData(response.data.users);
+        console.log(response.data.users);
         Swal.fire({
           icon: "success",
           title: "users gotten successfully!",
@@ -101,24 +103,22 @@ const User = ({ name }) => {
   return (
     <div className="w-100">
       <div className="product">
-        <BreadCrumb name="User page" />
-        <div className="p-4">
+        <div className="mt-4">
           <div className="product-body shadow">
-            <div className="d-flex align-items-center gap-2 actionIcons">
+            <div className="top-body">
               <div>
-                <MdOutlineTipsAndUpdates />
+                <input
+                  type="text"
+                  className="form-control w-100"
+                  placeholder="Search category..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
               </div>
-              <div className="tips">
-                Tip search by User Name: Each user is provided with a unique
-                email, which you can rely on to find the exact user you need.
-              </div>
-            </div>
-            <div className="showing mt-4">
-              <div className=" d-flex align-items-center gap-1">
-                <div className="table-desc">Showing</div>
+              <div className="d-flex align-items-center gap-2 flex-wrap">
                 <div>
                   <select
-                    className="select"
+                    className="form-select"
                     name=""
                     id=""
                     value={selectedOption}
@@ -129,26 +129,18 @@ const User = ({ name }) => {
                     <option value="30">30</option>
                   </select>
                 </div>
-              </div>
-              <div className="search-order">
-                <div className="table-desc">Search</div>
-                <div className="product-search ms-1">
-                  <input
-                    type="text"
-                    placeholder="Search User..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                  <div>
-                    <CiSearch />
-                  </div>
-                </div>
+                <button className="export-btn">
+                  <GoUpload /> Export
+                </button>
+                <button className="add-product-button">
+                  <IoIosAdd size={20} /> Add Customer
+                </button>
               </div>
             </div>
             <div
               style={{
                 maxWidth: "100%",
-                height: "500px",
+                height: "auto",
                 overflow: "scroll",
                 scrollbarWidth: "none",
               }}
@@ -159,9 +151,15 @@ const User = ({ name }) => {
               <table className="table3">
                 <thead>
                   <tr className="tableHead">
-                    <th>user</th>
-                    <th>Phone number</th>
-                    <th>email</th>
+                    <th className="product-check">
+                      <input type="checkbox" />
+                    </th>
+                    <th>CUSTOMER</th>
+                    <th>CUSTOMER ID</th>
+                    <th>COUNTRY</th>
+
+                    <th>PHONE NUMBER</th>
+                    <th>TOTAL SPEND</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -171,11 +169,60 @@ const User = ({ name }) => {
                     ) : (
                       currentProducts.map((product, i) => (
                         <tr key={product.i + 1}>
-                          <td>{product.FirstName}</td>
+                          <td className="product-check">
+                            <input type="checkbox" />
+                          </td>
+                          <td className="d-flex align-items-center gap-1">
+                            <div>
+                              <div className="user-profile">
+                                {product.FirstName.slice(0, 2)}
+                              </div>
+                            </div>
+                            <div>
+                              <div className="username">
+                                {product.FirstName}
+                              </div>
+                              <div className="useremail">
+                                omojolaobaloluwa@gmail.com
+                              </div>
+                            </div>
+                          </td>
+                          <td>#V{product._id.slice(0, 6)}</td>
+                          <td>
+                            {product.isConfirmed ? (
+                              <div className="d-flex align-items-center gap-1">
+                                <div className="country-flag">
+                                  <img
+                                    src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/330px-Flag_of_France.svg.png"
+                                    alt=""
+                                  />
+                                </div>
+                                <div className="country-name">France</div>
+                              </div>
+                            ) : (
+                              <div className="d-flex align-items-center gap-1">
+                                <div className="country-flag">
+                                  <img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Flag_of_the_United_States_%28Web_Colors%29.svg/330px-Flag_of_the_United_States_%28Web_Colors%29.svg.png"
+                                    alt=""
+                                  />
+                                </div>
+                                <div className="country-name">America</div>
+                              </div>
+                            )}
+                          </td>
                           <td>{product.phoneNumber}</td>
-                          <td>{product.email}</td>
 
-                          <td></td>
+                          <td>
+                            $
+                            {Math.floor(
+                              Math.random() *
+                                parseInt(product.phoneNumber.slice(4, 8))
+                            )
+                              .toString()
+                              .slice(0, 4)}
+                            .00
+                          </td>
                         </tr>
                       ))
                     )

@@ -89,11 +89,13 @@
   font-size: 15px;
 }
 .username {
-  color: #4b5966;
+  color: rgb(74 71 86);
+  font-size: 14px;
   font-family: publicSemiBold;
 }
 .useremail {
   color: #787878;
+  text-transform: lowercase !important;
   font-family: publicLight;
 }
 .processing {

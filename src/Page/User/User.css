@@ -1,0 +1,42 @@
+:root {
+  --primary-color: rgb(83, 109, 254);
+  --primary-color-light: #f3f8fb;
+  --primary-color-lighter: #e1eff85b;
+  --text: #4b5966;
+}
+@font-face {
+  font-family: poppinsBold;
+  src: url(../../assets/fonts/PublicSans-Bold.otf);
+}
+
+@font-face {
+  font-family: publicLight;
+  src: url(../../assets/fonts/PublicSans-Light.otf);
+}
+
+@font-face {
+  font-family: publicSemiBold;
+  src: url(../../assets/fonts/PublicSans-SemiBold.otf);
+}
+
+@font-face {
+  font-family: publicRegular;
+  src: url(../../assets/fonts/PublicSans-Regular.otf);
+}
+
+@font-face {
+  font-family: publicThin;
+  src: url(../../assets/fonts/PublicSans-Thin.otf);
+}
+
+.country-flag {
+  img {
+    border-radius: 100%;
+    height: 25px;
+    width: 25px;
+  }
+}
+.country-name {
+  color: #4b5966;
+  font-family: publicRegular !important;
+}
