@@ -85,11 +85,7 @@ const Login = () => {
             <button className="login-btn" type="submit" onClick={handleSubmit}>
               login
             </button>
-            <button
-              className="login-btn2"
-              type="submit"
-              onClick={() => Navigate("/page")}
-            >
+            <button className="login-btn2" onClick={() => Navigate("/page")}>
               Enter As Guest
             </button>
           </form>
