@@ -610,7 +610,10 @@ const Landing = () => {
                 </select>
               </div>
             </div>
-            <button className="order-button" onClick={navigate("/orders")}>
+            <button
+              className="order-button"
+              onClick={() => navigate("/orders")}
+            >
               <IoIosAdd size={22} />
               Show all Orders
             </button>
