@@ -4,29 +4,29 @@
   --primary-color-lighter: #e1eff85b;
   --text: #4b5966;
 }
-
 @font-face {
   font-family: poppinsBold;
-  src: url(../../assets/font/Poppins-SemiBold.ttf);
+  src: url(../../assets/fonts/PublicSans-Bold.otf);
 }
 
 @font-face {
-  font-family: poppinsLight;
-  src: url(../../assets/font/IBMPlexSans-Light.ttf);
+  font-family: publicLight;
+  src: url(../../assets/fonts/PublicSans-Light.otf);
 }
 
 @font-face {
-  font-family: poppinsSemiBold;
-  src: url(../../assets/font/Poppins-SemiBold.ttf);
+  font-family: publicSemiBold;
+  src: url(../../assets/fonts/PublicSans-SemiBold.otf);
 }
 
 @font-face {
-  font-family: poppinsRegular;
-  src: url(../../assets/font/Poppins-Medium.ttf);
+  font-family: publicRegular;
+  src: url(../../assets/fonts/PublicSans-Regular.otf);
 }
+
 @font-face {
-  font-family: poppinsMedium;
-  src: url(../../assets/font/Poppins-Medium.ttf);
+  font-family: publicThin;
+  src: url(../../assets/fonts/PublicSans-Thin.otf);
 }
 .login-container {
   display: flex;
@@ -35,12 +35,10 @@
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  background-color: var(--primary-color-light);
-  padding: 20px;
 }
 .login {
   width: 400px;
-  height: 400px;
+  height: auto;
   background-color: white;
   margin-top: 30px;
   padding: 30px;
@@ -49,7 +47,7 @@
   flex-direction: column;
 }
 .login-head {
-  font-family: poppinsSemiBold !important;
+  font-family: publicSemiBold !important;
   font-size: 25px;
   color: #4b5966;
   span {
@@ -57,13 +55,13 @@
   }
 }
 .login-welcome {
-  font-family: poppinsSemiBold;
+  font-family: publicSemiBold;
   text-transform: capitalize;
   color: var(--primary-color);
 }
 .content {
   color: #4b5966;
-  font-family: poppinsMedium;
+  font-family: publicRegular;
   font-size: 12px;
 }
 .input-container {
@@ -83,11 +81,11 @@
     border-radius: 3px;
   }
   ::placeholder {
-    font-family: "poppinsRegular";
+    font-family: publicLight;
     font-size: 14px;
   }
   label {
-    font-family: poppinsSemiBold;
+    font-family: publicSemiBold;
     font-size: 14px;
     color: #4b5966;
   }
@@ -96,14 +94,31 @@
   width: 100%;
   margin-top: 20px;
   padding: 8px;
-  color: white;
-  background-color: var(--primary-color);
+  color: var(--primary-color);
+  background-color: rgba(83, 109, 254, 0.183);
   border: none;
   border-radius: 3px;
   text-transform: capitalize;
-  font-family: poppinsRegular;
+  font-family: publicRegular;
 }
-
+.login-btn2 {
+  width: 100%;
+  padding: 8px;
+  color: red;
+  background-color: rgba(255, 0, 0, 0.178);
+  border: none;
+  border-radius: 3px;
+  margin-top: 10px;
+  text-transform: capitalize;
+  font-family: publicRegular;
+}
+.or {
+  text-align: center;
+  padding: 10px;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-family: publicRegular;
+}
 @media screen and (max-width: 408px) {
   .login {
     width: 100%;

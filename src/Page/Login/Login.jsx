@@ -85,6 +85,9 @@ const Login = () => {
             <button className="login-btn" type="submit" onClick={handleSubmit}>
               login
             </button>
+            <button className="login-btn2" type="submit" onClick={handleSubmit}>
+              Enter As Guest
+            </button>
           </form>
         </div>
       </div>
